@@ -1,0 +1,403 @@
+<!doctype html>
+<html lang="ko" data-resolution="landscape">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=1920, height=1080">
+<title>한국어 위기 신호 감지 모델 개발</title>
+<script src="assets/vendor/gsap.min.js"></script>
+<style>
+:root{--bg:#121215;--ink:#f5f2f3;--green:#ff4d64;--pale:#282329;--line:#51464e;--muted:#bcb2ba;--red:#ff6478;--rose:#341e28}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{width:1920px;height:1080px;overflow:hidden;background:var(--bg);color:var(--ink);font-family:system-ui,sans-serif}
+.scene{position:absolute;inset:0;width:100%;height:100%;padding:78px 120px;opacity:0;visibility:hidden;pointer-events:none;background:var(--bg)}
+.scene:first-of-type{opacity:1;visibility:visible}
+header{display:flex;align-items:baseline;justify-content:space-between;height:100px}
+h1{font-size:64px;line-height:1.15;letter-spacing:-.035em;font-weight:730;text-wrap:balance}
+.stage{position:relative;width:1680px;height:680px;margin-top:44px}
+.stage>svg{position:absolute;inset:0;width:100%;height:100%;overflow:visible}
+.stage-label{position:absolute;font-size:44px;line-height:1.3;font-weight:680;letter-spacing:-.025em}
+.green{color:var(--green)}.red{color:var(--red)}
+.route{fill:none;stroke:var(--line);stroke-width:4;stroke-linecap:round;stroke-linejoin:round}
+.route.red{stroke:#9e455b}
+.token{fill:var(--green)}
+.footnote{position:absolute;bottom:54px;left:120px;font-size:18px;color:var(--muted);line-height:1.4}
+/* Need: a running conversation crosses one decision gate. */
+#necessity .stage{margin-top:52px}
+#necessity .chat-title{left:0;top:10px}
+#necessity .detector-title{left:688px;top:84px;width:340px;text-align:center}
+#necessity .outcome{left:1230px;font-size:54px}
+#necessity .outcome.risk{top:195px;color:var(--red)}
+#necessity .outcome.safe{top:422px;color:var(--green)}
+.chat-kind{font-size:25px;font-weight:600;fill:var(--green)}
+.chat-kind.risk{fill:var(--red)}
+.detector-word{font-size:44px;font-weight:720;fill:var(--green);text-anchor:middle}
+/* Data: a wide source capture and a single official record count. */
+.capture{margin-top:38px}
+.capture-window{position:relative;height:396px;overflow:hidden;border-radius:14px;background:white;border:2px solid var(--line)}
+.capture-window img{position:absolute;width:3800px;max-width:none;height:auto;left:-700px;top:-3px}
+.capture figcaption{font-size:18px;line-height:1.4;margin-top:13px;color:var(--muted)}
+.capture a{color:var(--muted);text-decoration:none}
+.stats{display:grid;grid-template-columns:1fr;gap:120px;margin-top:40px}
+.stat-label{font-size:32px;color:var(--muted);line-height:1.35}
+.stat-value{display:flex;align-items:baseline;gap:18px;margin-top:4px;font-size:38px}
+.stat-value strong{display:inline-block;font-size:106px;line-height:1.15;letter-spacing:-.035em;font-weight:720;color:var(--green);font-variant-numeric:tabular-nums;transform-origin:left center}
+/* Selected dark-tech direction: charcoal, signal red, neutral ordinary speech. */
+:root{--surface:#1c1a20;--neutral:#b9b1ba;--edge:#43353e}
+header{position:relative;padding-left:34px;z-index:1}
+header:before{content:"";position:absolute;left:0;top:9px;width:6px;height:54px;background:var(--red)}
+h1{font-size:66px;font-weight:660;letter-spacing:-.035em}
+.route{stroke-width:2.2}.route.red{stroke:#995064}
+.stage-label{font-weight:580}.footnote{color:#a99ca7}
+.chat-kind{fill:var(--neutral);font-size:24px;font-weight:560}.chat-kind.risk{fill:var(--red)}
+.detector-word{font-size:42px;font-weight:650;fill:#f5f2f3}
+#necessity .detector-title{font-size:34px;top:69px;color:#bcb2ba}
+#necessity .outcome{font-size:49px;font-weight:600}
+#necessity .outcome.safe{color:var(--neutral)}
+.capture-window{border:0;border-radius:12px}.capture figcaption{margin-top:16px}
+.stats{gap:100px;margin-top:44px}.stats>div{padding-top:25px;border-top:1px solid #55434f;display:flex;align-items:center;justify-content:space-between}
+.stat-label{font-size:29px}.stat-value strong{font-weight:600;color:#ff6478}
+.diagram-tick{stroke:#68515e;stroke-width:2}.diagram-quiet{stroke:#44353f;stroke-width:1.5;fill:none}
+
+/* Parallel start, direct scoring finishes while reasoning tokens continue. */
+.decision-compare{position:absolute;left:120px;top:263px;width:1680px;height:690px}
+.decision-compare>svg{position:absolute;inset:0;width:100%;height:100%;overflow:visible}
+.compare-divider{stroke:#352a33;stroke-width:1;fill:none}.compare-track{stroke:#54414e;stroke-width:2;fill:none}
+.compare-flow{fill:none;stroke-width:3;stroke-dasharray:1;stroke-dashoffset:1}.llm-flow{stroke:#bcb0ba}.nimble-flow{stroke:#ff6478}
+.compare-name{position:absolute;left:0;width:270px}.llm-name{top:112px}.nimble-name{top:459px}.compare-name strong{display:block;font-size:43px;font-weight:620;letter-spacing:-.03em}.compare-name span{display:block;font-size:21px;color:#bcb2ba;margin-top:13px}.nimble-name strong{color:#ff6478;font-size:43px}
+.compare-input{position:absolute;left:312px;width:136px;height:92px;display:grid;place-items:center;border:1.5px solid #71606e;background:#201c24;border-radius:12px;font-size:34px}.llm-input{top:105px}.nimble-input{top:459px;border-color:#a3475f;background:#291c26}
+.generation-box,.scoring-box{position:absolute;left:592px;width:550px;height:238px;padding:30px 32px;background:#211d26;border-radius:14px}.generation-box{top:31px}.scoring-box{top:385px;background:#2a1b26;border:1px solid #653344}
+.generation-box h2,.scoring-box h2{font-size:34px;font-weight:570;line-height:1.3;letter-spacing:-.025em}.scoring-box h2{color:#ffe7ed}
+.reasoning-tokens{display:flex;gap:7px;flex-wrap:wrap;align-content:start;width:486px;height:86px;margin-top:20px}.reasoning-tokens span{font-size:25px;padding:5px 8px;background:#39313d;border-radius:5px;color:#e1d6df;opacity:.14}
+.generation-bottom{display:flex;align-items:center;justify-content:space-between;font-size:20px;color:#bcb2ba;margin-top:12px}
+.scoring-box p{font-size:24px;color:#ff9baa;margin-top:18px}.score-options{display:grid;grid-template-columns:62px 1fr;column-gap:18px;row-gap:11px;margin-top:24px;align-items:center;font-size:23px;color:#e5c4d1}.score-options>div{height:6px;background:#503040;overflow:hidden}.score-options i{display:block;width:100%;height:100%;background:#ff6478;transform-origin:left center}.score-options #false-candidate{background:#bc8a9e}
+.compare-output{position:absolute;left:1280px;width:400px}.llm-output{top:32px;height:284px}.nimble-output{top:461px}
+#llm-answer{font-size:36px;line-height:1.55;font-weight:510;letter-spacing:-.02em;word-break:keep-all;color:#f1eaf0}
+#nimble-decision{display:flex;align-items:baseline;gap:36px;min-height:90px}#nimble-decision strong{font-size:63px;font-weight:610;color:#ff758b}#nimble-decision b{font-size:65px;font-weight:560;color:#fff1f5}#nimble-decision b span{font-size:30px;margin-left:5px}
+
+/* Three aligned steps; the only moving marks show data and computation. */
+.judgment-flow{position:absolute;left:120px;top:314px;width:1680px;height:540px}
+.judgment-links{position:absolute;inset:0;width:100%;height:100%;overflow:visible}
+.judgment-column{position:absolute;top:0}.judgment-column h2{font-size:30px;line-height:1.3;font-weight:540;color:#c2b4bf;margin-bottom:34px;letter-spacing:-.02em}
+.utterance-column{left:0;width:530px}.criterion-column{left:630px;width:350px}.json-column{left:1080px;width:600px}
+.utterance-surface,.criterion-surface,.json-surface{height:350px;border-radius:12px;background:#211d25;position:relative}
+.utterance-surface{padding:45px 38px}.utterance-surface p{font-size:43px;line-height:1.6;font-weight:520;word-break:keep-all;letter-spacing:-.025em}
+.quote-cursor{display:inline-block;width:3px;height:40px;background:#ff6478;vertical-align:-5px;margin-left:4px}
+.criterion-surface{padding:50px 22px;background:#2c1e28;border:1px solid #704053;text-align:center}.criterion-surface p{font-size:33px;line-height:1.65;font-weight:550;letter-spacing:-.025em}
+.criterion-score{display:block;margin-top:24px;color:#ff849a;font-size:62px;line-height:1.2;font-weight:630;font-variant-numeric:tabular-nums;letter-spacing:-.035em}
+.criterion-progress{position:absolute;left:22px;right:22px;bottom:25px;height:3px;background:#533041;overflow:hidden}.criterion-progress i{display:block;height:100%;width:100%;background:#ff6478;transform-origin:left center}
+.json-surface{display:flex;align-items:center;padding:34px;background:#1b1a20;border:1px solid #493340}.json-surface pre{font:40px/1.83 ui-monospace,monospace;color:#c6bbc6;white-space:pre;margin:0}.json-key{color:#dbc9d6}.json-string{color:#c5b0c0}.json-value{color:#ff849a}
+/* Public records feed evaluation; augmented adult examples feed LoRA directly. */
+.training-flow{position:absolute;left:120px;top:280px;width:1680px;height:660px}
+.training-links{position:absolute;inset:0;width:100%;height:100%}
+.training-card{position:absolute;display:flex;flex-direction:column;justify-content:center;padding:30px;border:1px solid #594452;border-radius:14px;background:#211d25}
+.training-card h2{font-size:36px;line-height:1.45;font-weight:590;letter-spacing:-.025em}
+.training-source{left:0;top:120px;width:360px;height:180px}
+.training-adult{left:0;top:470px;width:420px;height:150px;background:#2a1d28;border-color:#986075}
+.training-adult h2{color:#ffe4ec}
+.training-augment-label{position:absolute;left:210px;top:365px;font-size:26px;color:#bfb1bc}
+.training-evaluation-label{position:absolute;left:360px;top:160px;width:170px;text-align:center;font-size:26px;color:#bfb1bc}
+.evaluation-stage{position:absolute;left:530px;top:60px;width:600px;height:300px;padding:32px;border:1px solid #715060;border-radius:14px;background:#211d25}
+.evaluation-stage h2{font-size:36px;font-weight:600;letter-spacing:-.025em;margin:12px 0 24px}
+.evaluation-stage p{font-size:23px;color:var(--muted)}
+.evaluation-models{display:flex;flex-wrap:wrap;gap:12px;list-style:none}
+.evaluation-models li{padding:10px 17px;border:1px solid #594452;border-radius:8px;font-size:26px}
+.evaluation-condition{position:absolute;left:1148px;top:120px;width:154px;text-align:center;word-break:keep-all;font-size:25px;line-height:1.4;color:#ff849a;font-weight:600}
+.training-model{left:1320px;top:70px;width:360px;height:310px;align-items:center;padding:24px;background:#241b24}
+.training-model h2{font-size:27px;color:#c8b9c4;margin-bottom:4px}
+.training-caption{font-size:34px;font-weight:650;color:#ff849a;line-height:1.4}
+/* Adapted from the HyperFrames stagger-lattice component; two LoRA factor grids. */
+.lora-matrices{display:flex;align-items:center;justify-content:center;gap:34px;width:300px;height:154px;margin-top:14px}
+.lora-grid{display:grid;gap:5px;flex-shrink:0}
+.lora-grid-tall{grid-template-columns:repeat(2,22px)}
+.lora-grid-wide{grid-template-columns:repeat(5,22px)}
+.lora-cell{display:block;width:22px;height:22px;border-radius:4px;background:#ff6478;transform:translateY(var(--hf-cell-y,0px)) scale(var(--hf-cell-scale,1));opacity:var(--hf-cell-opacity,.25)}
+.lora-coupling{width:30px;height:2px;background:#795063;flex-shrink:0}
+.lora-training-progress{position:absolute;bottom:20px;left:28px;right:28px;height:3px;background:#533041}
+.lora-training-progress i{display:block;width:100%;height:100%;background:#ff6478;transform-origin:left center}
+.training-signal{fill:none;stroke:#ff6478;stroke-width:3;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:1;stroke-dashoffset:1}
+</style></head><body>
+<div id="deck-clock" data-composition-id="root" data-start="0" data-duration="50" data-width="1920" data-height="1080" style="position:absolute;inset:0;pointer-events:none" aria-hidden="true"></div>
+<script type="application/hyperframes-slideshow+json">
+{
+  "slides": [
+    {
+      "sceneId": "necessity",
+      "notes": "면담 중 위기 신호를 놓치는 문제와 일상적인 표현을 위기로 오인해 면담을 중단하는 문제를 함께 줄이려는 개발입니다. 도식의 안전망이 위기 신호를 포착하고 면담의 흐름을 이어가도록 개발하려는 필요성을 설명합니다.\n\n도식은 특정 발화 사례가 아니라 개발 필요성을 설명하는 개념도입니다. 대화 속 위기 신호를 포착하는 안전망과 면담을 이어가는 흐름을 함께 보여줍니다. 현재 모델 성능을 검증했다는 뜻은 아닙니다.\n\n화면의 필요성 줄글은 생략합니다. 대화 말풍선은 내용을 추상적인 토큰 막대로 표시하며 지속적으로 들어오고 위로 이동합니다. 감지와 두 갈래의 신호 흐름을 반복하지만 개별 발화의 실제 판단 결과가 아닙니다. 화면을 떠나면 해당 화면의 재생을 중단하며 애니메이션 감소 설정에서는 정지 도식으로 표시합니다.\n\n목표는 한국어 자해·자살·타해 신호를 감지하는 로컬 모델을 개발하는 것입니다. 첫 적용 대상은 성인의 사회적 고립 면담 앱입니다. 개발 계획이며 성인 성능 검증을 완료했다는 뜻은 아닙니다.\n\n발표 화면에는 페이지 번호와 이동 버튼을 표시합니다. 구체적인 설명은 이 노트로 전달합니다."
+    },
+    {
+      "sceneId": "nimble_intro",
+      "notes": "이 장은 System One 접근을 소개하며 모델 예시로 Nimble과 Jev를 표시합니다. 비교하는 추론형 LLM 예시는 GPT와 Qwen이며, 추론 모드를 사용하는 경우의 개념도입니다. GPT·Qwen 계열의 모든 모델과 실행 모드가 추론문을 생성한다는 뜻은 아닙니다. 아래의 구체적 구현·수치는 Nimble에 관한 설명이며 Jev의 측정값으로 일반화하지 않습니다.\n\nNimble은 입력과 판단 기준을 읽고 정해진 선택지의 점수를 직접 계산해 판단과 후보별 확률을 반환하는 공개 로컬 모델입니다. Qwen3.5-9B를 판단 작업에 맞춰 학습한 모델이며, Jev의 System One 접근에서 영감을 받았지만 Jev 가중치나 증류 모델은 아닙니다.\n\n화면은 추론 모드를 사용하는 생성형 LLM과 Nimble의 후보 점수 계산 방식을 비교합니다. 위쪽은 입력을 처리한 뒤 추론문 토큰과 최종 답변 토큰을 순차 생성합니다. 아래쪽은 긴 추론문과 답변 문자열 생성을 생략하고 허용된 선택지의 점수를 계산합니다. 입력을 처리하는 신경망 연산 자체는 두 방식에 모두 있습니다. '추론이 전혀 없다'고 설명하지 않습니다. Qwen을 비롯한 일반 LLM도 비추론 모드나 후보 점수 계산 방식으로 실행할 수 있으므로 모든 LLM보다 빠르다는 비교가 아닙니다.\n\n두 흐름은 함께 시작하고, Nimble의 예시 결과가 먼저 나타나는 동안 위쪽 토큰 생성은 계속됩니다. 애니메이션은 8.6초 후 정지하며 실제 실행 시간이나 속도 배수를 재현하지 않습니다. 화면에는 true와 94%만 표시합니다. 이는 설명용 가상 선택지 확률입니다. 모델의 정답률이나 자해·자살 발생 확률이 아닙니다. 반환 형식은 프로그램이 구성합니다.\n\n공식 속도 관측값은 H100의 단일 질문 120개에서 중앙값 106ms, M5 Pro 64GB의 324개에서 중앙값 444ms입니다. 조건이 다른 결과이며 이 프로젝트의 측정값이 아닙니다. 입력 처리와 9B 메모리 부담은 남습니다.\n\n판단 성능 근거는 노트에만 둡니다. 초기 공개 모델의 합성 판단 문항 324개에서 Nimble 292/324=90.12%, 기반 Qwen3.5-9B 215/324=66.36%, Jev 302/324=93.21%였습니다. 사람 검토가 없는 합성 기준 라벨이며 6개 소스 계열의 좁은 평가입니다. 별도 공개 사람 라벨 평가 13개 부분집합·3,880개 기록에서도 과제별 성능이 다릅니다. 예를 들어 BoolQ 86.0%, Aegis2 81.2%, Civil Comments 70.3%로, 한국어 위기 감지 성능을 뜻하지 않습니다. 이번 소개 화면은 이러한 정확도 숫자를 전면에 제시하지 않습니다.\n\n출처: https://github.com/bespokelabsai/nimble#capabilities · https://github.com/bespokelabsai/nimble#observed-inference-latency · https://github.com/bespokelabsai/nimble/blob/main/docs/PUBLIC_BENCHMARKS.md\n\n추론형 LLM의 답변은 “죽고 싶다는 생각이 반복된다는 표현이 있어, 자살 사고와 관련된 위험 신호가 포착됩니다.”라는 설명용 문장을 순차 표시합니다. 실제 호출 결과가 아닙니다. 결과 영역의 답변 생성·생성 완료·바로 반환·판단과 확률 설명 문구는 제거하고 발표자가 구두로 설명합니다."
+    },
+    {
+      "sceneId": "nimble",
+      "notes": "이 장의 제목과 도식 모델 명칭은 System One 모델로 표시합니다. Nimble을 예로 든 판단 흐름이며 JSON 키와 형식은 실행 API·프로젝트 구현에 따라 다릅니다.\n\n참여자의 입력 문장 → 위기 판단 기준 → JSON 결과를 같은 높이의 세 영역으로 보여줍니다. 문장이 입력된 뒤 위험 신호 선택지 점수가 0%에서 94%까지 한 번 올라가고, 동일한 값을 risk: 0.94로 표시한 결과 JSON이 한 번에 나타납니다. 가운데의 true/false 표시는 생략하고 점수로 통일합니다. 4.6초에 멈추고 다시 이 장에 들어오면 한 번 새로 재생합니다.\n\n표시한 JSON은 이 프로젝트 출력에서 핵심 필드 risk만 남긴 설명용 예시입니다. 실제 nimble.py CLI 출력 형식은 변경하지 않았습니다. model은 사용한 Ollama 모델 태그, risk는 모델의 위기 선택지 점수, crisis는 risk >= 0.5를 코드로 적용한 결과입니다. 0.94는 설명용 가상 값이며 실제 호출 결과나 임상적 발생 확률이 아닙니다.\n\n현재 연동 API의 원본은 /v1/systemone 응답 안의 answers.crisis.noul 점수입니다. 프로젝트는 그 점수를 읽어 {model, risk, crisis} 형태로 JSON을 구성합니다. Nimble이 JSON 문자열을 토큰별로 생성하는 방식은 아닙니다. 공식 Python scorer도 후보 점수를 계산한 뒤 코드가 output 및 fields 구조를 구성하므로, 세부 반환 키는 실행 API에 따라 다릅니다.\n\n출처: 프로젝트 nimble.py의 score 및 main, https://github.com/bespokelabsai/nimble#capabilities"
+    },
+    {
+      "sceneId": "data",
+      "notes": "데이터: AI Hub 공식 페이지의 실제 캡처입니다. 공식 전체 3,596건은 Training 2,876건, Validation 360건, Test 360건입니다. 현재 원본만 보관합니다. 추출 단위, 대화 맥락, 라벨링과 분할 기준은 사용자가 결정한 뒤 구현합니다. 기존 미승인 가공본과 변환기는 삭제했습니다.\n\n자료 규모는 LoRA 추가 학습 실험을 시작할 근거이며 성인 감지 성능을 보장하지 않습니다. 화면에는 공식 전체 상담 자료 3,596건만 표시합니다. 승인된 학습용 발화 수는 아직 없습니다. 숫자는 화면 진입 시 한 번만 올라가며 3.2초 뒤 완성된 화면을 유지합니다. 다시 진입하면 한 번 새로 재생합니다.\n\n출처: https://aihub.or.kr/aihubdata/data/view.do?dataSetSn=71680 · 캡처 및 수량 확인 2026-10-11\n\n발표 화면에는 페이지 번호와 이동 버튼을 표시합니다. 구체적인 설명은 이 노트로 전달합니다."
+    },
+    {
+      "sceneId": "finetuning",
+      "notes": "먼저 Qwen, Nimble, Laya, GPT, Jev의 모델 성능을 평가하고 비교합니다. 비교 대상 명칭은 후보군이며 구체적인 버전, 실행 설정, 평가 입력과 분할 기준은 별도로 확정합니다. 같은 평가 조건에서 종합 위기 5단계와 자살·자해 판정 성능, 놓침·오탐 및 응답 시간을 살펴봅니다. 기존 연구 자료의 모델명은 Laya입니다.\n\n비교 결과 목표 성능이 부족한 경우 LoRA 파인튜닝으로 보완합니다. 모든 비교 모델에 LoRA를 적용한다는 뜻은 아니며, 현재 추가 학습 후보는 Nimble입니다. LoRA는 적은 수의 추가 매개변수를 학습하는 방식으로, 대여한 GPU에서 실시할 계획입니다. 충분한 성능이 나오면 파인튜닝이 필수 단계는 아닙니다. 성능 충족 기준은 평가 전에 정합니다.\n\n아동·청소년 공개 자료를 바탕으로 성인 학습 예문을 증강하고 검토합니다. 도식의 주 경로는 아동·청소년 공개 자료 → 모델 성능 평가 및 비교 → 성능 부족 시 LoRA 파인튜닝입니다. 공개 자료에서 성인 데이터를 증강하는 가지를 따로 표시하고, 성인 증강 데이터는 평가 상자를 거치지 않고 LoRA 파인튜닝에 직접 연결합니다. 추출·라벨링·분할·증강 기준은 사용자 결정 전이며, 이 발표 변경은 데이터 가공이나 학습 실행을 뜻하지 않습니다. 성인 최종 평가 자료는 별도로 확보·고정하고 증강이나 학습에 쓰지 않습니다. 학습 후 동일한 평가 기준으로 다시 비교합니다. 한국어 자살 위험 감지 모델이라는 문구는 가운데 평가 영역에 표시하며 별도 결과 모델 상자는 두지 않습니다.\n\n애니메이션은 자료 → 모델 비교 → 성능 부족 시 LoRA 학습의 주 경로와 성인 증강 데이터 → LoRA 학습의 보조 경로를 6.5초 동안 한 번 재생합니다. 격자는 LoRA 개념 설명이며 실제 학습 로그가 아닙니다.\n\n출처: https://aihub.or.kr/aihubdata/data/view.do?dataSetSn=71680 · LoRA 원리: https://arxiv.org/abs/2106.09685 · 행렬 애니메이션 시각 참고: https://tonyreina.github.io/lora/getting-started/what-is-lora/"
+    }
+  ],
+  "slideSequences": []
+}
+</script>
+<section id="necessity" class="scene clip" data-composition-id="necessity" data-start="0" data-duration="10" data-track-index="0" data-width="1920" data-height="1080" data-label="대화 속 위기 신호 포착 모델 개발">
+<header><h1>대화 속 위기 신호 포착 모델 개발</h1></header>
+<div class="stage" role="img" aria-label="계속되는 면담 대화에서 위기 신호를 포착하고 평범한 대화는 이어가는 감지 흐름">
+<svg viewBox="0 0 1680 680" aria-hidden="true">
+<defs><clipPath id="conversation-clip"><rect x="0" y="78" width="500" height="550"/></clipPath></defs>
+<g clip-path="url(#conversation-clip)" id="conversation"></g>
+<path id="need-in" class="route" d="M480 340 H718"/>
+<path id="need-risk" class="route red" d="M998 340 H1088 Q1120 340 1120 308 V230 H1190"/>
+<path id="need-safe" class="route" d="M998 340 H1088 Q1120 340 1120 372 V458 H1190"/>
+<rect x="718" y="222" width="280" height="224" rx="16" fill="#2c1b26"/>
+<rect id="need-ring" x="718" y="222" width="280" height="224" rx="16" fill="none" stroke="#ff6478" stroke-width="1.5"/>
+
+<text class="detector-word" x="858" y="352">감지</text>
+
+<circle id="need-dot" cx="0" cy="0" r="7" fill="#ff4d64"/>
+<circle id="need-risk-halo" cx="1184" cy="230" r="25" fill="none" stroke="#994255" stroke-width="1.5"/>
+<circle cx="1184" cy="230" r="6" fill="#ff6478"/>
+<circle id="need-safe-halo" cx="1184" cy="458" r="25" fill="none" stroke="#51434e" stroke-width="1.5"/>
+<circle cx="1184" cy="458" r="6" fill="#b9b1ba"/>
+</svg>
+<div class="stage-label chat-title">면담 대화</div>
+<div class="stage-label detector-title">로컬 모델</div>
+<div class="stage-label outcome risk">위기 신호 포착</div>
+
+<div class="stage-label outcome safe">면담 이어가기</div>
+
+</div></section>
+
+<section id="nimble_intro" class="scene clip" data-composition-id="nimble_intro" data-start="10" data-duration="10" data-track-index="1" data-width="1920" data-height="1080" data-label="System One: 생성과 판단의 차이">
+<header><h1>System One</h1></header>
+<div class="decision-compare" role="img" aria-label="추론형 LLM은 추론문과 답변을 순차 생성합니다. System One 모델은 추론문 생성을 생략하고 선택지 점수를 계산해 판단과 확률을 반환합니다. GPT·Qwen의 추론 모드와 Nimble·Jev의 접근을 비교하는 개념도입니다.">
+<svg viewBox="0 0 1680 690" aria-hidden="true">
+<path class="compare-divider" d="M0 328 H1680"/>
+<path class="compare-track" d="M448 151 H1244 M448 505 H1244"/>
+<path id="compare-llm-flow" class="compare-flow llm-flow" d="M448 151 H1244" pathLength="1"/>
+<path id="compare-nimble-flow" class="compare-flow nimble-flow" d="M448 505 H1244" pathLength="1"/>
+<circle id="compare-llm-dot" cx="448" cy="151" r="6" fill="#d4c8d0"/>
+<circle id="compare-nimble-dot" cx="448" cy="505" r="7" fill="#ff6478"/>
+</svg>
+<div class="compare-name llm-name"><strong>추론형 LLM</strong><span>GPT · Qwen</span></div>
+<div class="compare-name nimble-name"><strong>System One</strong><span>Nimble · Jev</span></div>
+<div class="compare-input llm-input">입력</div><div class="compare-input nimble-input">입력</div>
+<div class="generation-box"><h2>추론문 생성</h2><div class="reasoning-tokens" aria-hidden="true"><span>문맥</span><span>을</span><span>살펴</span><span>보고</span><span>조건</span><span>과</span><span>비교</span><span>하여</span><span>결과</span><span>를</span><span>판단</span><span>하면</span></div></div>
+<div class="scoring-box"><h2>선택지 점수 계산</h2><div class="score-options" aria-hidden="true"><span>true</span><div><i id="true-candidate"></i></div><span>false</span><div><i id="false-candidate"></i></div></div><p>추론문 생성 생략</p></div>
+<div class="compare-output llm-output"><p id="llm-answer"></p></div>
+<div class="compare-output nimble-output"><div id="nimble-decision"><strong>true</strong><b>94<span>%</span></b></div></div>
+</div>
+<p class="footnote">구조 설명용 시연 · 시간 비율과 확률은 예시 · 출처: Bespoke Labs</p>
+</section>
+<section id="nimble" class="scene clip" data-composition-id="nimble" data-start="20" data-duration="10" data-track-index="2" data-width="1920" data-height="1080" data-label="System One 모델의 판단 과정">
+<header><h1>System One 모델의 판단 과정</h1></header>
+<div class="judgment-flow" role="group" aria-label="입력 문장을 기준에 따라 판단하고 프로젝트가 JSON으로 반환하는 과정">
+<svg class="judgment-links" viewBox="0 0 1680 540" aria-hidden="true"><path id="nimble-in" class="route" d="M530 250 H624"/><path id="nimble-out" class="route" d="M980 250 H1074"/><path d="M612 242 L622 250 L612 258 M1062 242 L1072 250 L1062 258" fill="none" stroke="#9e7089" stroke-width="2"/><circle id="nimble-dot" cx="530" cy="250" r="6" fill="#ff6478"/></svg>
+<div class="judgment-column utterance-column"><h2>입력 문장</h2><div class="utterance-surface"><p aria-label="요즘 죽고 싶다는 생각이 계속 들어요."><span id="typed-quote"></span><span class="quote-cursor" aria-hidden="true"></span></p></div></div>
+<div class="judgment-column criterion-column"><h2>System One 모델</h2><div class="criterion-surface"><p>자해·자살·타해<br>신호가 있는가?</p><strong id="criterion-score" class="criterion-score" aria-label="설명용 위험 신호 점수 94퍼센트">94%</strong><div class="criterion-progress" aria-hidden="true"><i id="criterion-progress"></i></div></div></div>
+<div class="judgment-column json-column"><h2>JSON</h2><div class="json-surface"><pre id="result" aria-label="설명용 JSON 결과. risk 0.94"><code>{
+  <span class="json-key">"risk"</span>: <span class="json-value">0.94</span>
+}</code></pre></div></div>
+</div>
+<p class="footnote">핵심 필드만 표시한 JSON 예시 · 점수는 설명용 예시 · 실제 모델 실행 결과 아님</p>
+</section>
+<section id="data" class="scene clip" data-composition-id="data" data-start="30" data-duration="10" data-track-index="3" data-width="1920" data-height="1080" data-label="상담 데이터">
+<header><h1>상담 데이터</h1></header>
+<figure class="capture"><div class="capture-window"><img src="assets/aihub-child-counseling.png" alt="AI Hub 아동·청소년 상담데이터 공식 페이지 캡처" data-layout-allow-overflow></div><figcaption><a href="https://aihub.or.kr/aihubdata/data/view.do?dataSetSn=71680" target="_blank" rel="noopener">AI Hub · 아동·청소년 상담데이터 ↗</a></figcaption></figure>
+<div class="stats"><div><p class="stat-label">공식 전체 상담 자료</p><div class="stat-value" aria-label="3,596건"><strong id="record-count" aria-hidden="true">0</strong><span>건</span></div></div></div>
+
+</section>
+<section id="finetuning" class="scene clip" data-composition-id="finetuning" data-start="40" data-duration="10" data-track-index="4" data-width="1920" data-height="1080" data-label="모델 성능 확인 및 LoRA 파인튜닝">
+<header><h1>모델 성능 확인 및 LoRA 파인튜닝</h1></header>
+<div class="training-flow" role="group" aria-label="아동·청소년 공개 자료로 모델 성능을 평가·비교하고 성능이 부족하면 LoRA 파인튜닝을 실시합니다. 원자료에서 증강한 성인 데이터는 평가를 거치지 않고 LoRA 학습에 직접 연결합니다."><svg class="training-links" viewBox="0 0 1680 660" aria-hidden="true"><defs><marker id="training-arrow" markerWidth="9" markerHeight="9" refX="8" refY="4" orient="auto" markerUnits="userSpaceOnUse"><path d="M1 0 L8 4 L1 8" fill="none" stroke="#b78498" stroke-width="1.5"/></marker></defs><g fill="none" stroke="#634654" stroke-width="2" marker-end="url(#training-arrow)"><path d="M360 210 H522"/><path d="M1130 210 H1312"/><path d="M180 300 V462"/><path d="M420 545 H1475 Q1500 545 1500 520 V388"/></g><path id="training-original-flow" class="training-signal" pathLength="1" d="M360 210 H522"/><path id="training-result-flow" class="training-signal" pathLength="1" d="M1130 210 H1312"/><path id="training-augment-flow" class="training-signal" pathLength="1" d="M180 300 V462"/><path id="training-adult-flow" class="training-signal" pathLength="1" d="M420 545 H1475 Q1500 545 1500 520 V388"/></svg>
+<div id="training-source-card" class="training-card training-source"><h2>아동·청소년<br>공개 자료</h2></div>
+<div class="evaluation-stage" id="evaluation-stage"><p>한국어 자살 위험 감지 모델</p><h2>모델 성능 평가 및 비교</h2><ul class="evaluation-models" aria-label="비교할 모델"><li>Qwen</li><li>Nimble</li><li>Laya</li><li>GPT</li><li>Jev</li></ul></div>
+<div class="evaluation-condition" id="evaluation-condition">성능 부족시</div>
+<div class="training-evaluation-label">평가</div>
+<div class="training-augment-label">증강</div>
+<div id="training-adult-card" class="training-card training-adult"><h2>성인 증강 데이터</h2></div>
+<div class="training-card training-model"><h2>Nimble</h2><p class="training-caption">LoRA 파인튜닝</p><div class="lora-matrices" role="img" aria-label="LoRA의 작은 두 가중치 행렬을 업데이트하는 개념 애니메이션"><div class="lora-grid lora-grid-tall"><span class="lora-cell"></span><span class="lora-cell"></span><span class="lora-cell"></span><span class="lora-cell"></span><span class="lora-cell"></span><span class="lora-cell"></span><span class="lora-cell"></span><span class="lora-cell"></span><span class="lora-cell"></span><span class="lora-cell"></span></div><div class="lora-coupling" aria-hidden="true"></div><div class="lora-grid lora-grid-wide"><span class="lora-cell"></span><span class="lora-cell"></span><span class="lora-cell"></span><span class="lora-cell"></span><span class="lora-cell"></span><span class="lora-cell"></span><span class="lora-cell"></span><span class="lora-cell"></span><span class="lora-cell"></span><span class="lora-cell"></span></div></div><div class="lora-training-progress" aria-hidden="true"><i id="lora-learning-progress"></i></div></div>
+</div>
+</section>
+<script>
+// One live clock owns the active scene. Audit and playback share the same pure painters.
+const SIGNAL='#ff4d64', NEUTRAL='#b9b1ba', RED='#ff6478';
+const $=selector=>document.querySelector(selector);
+const clamp=n=>Math.max(0,Math.min(1,n));
+const mod=(n,d)=>((n%d)+d)%d;
+const ease=n=>1-Math.pow(1-clamp(n),3);
+const scenes=Array.from(document.querySelectorAll('.scene')).map(el=>({el,id:el.id,start:Number(el.dataset.start),duration:Number(el.dataset.duration)}));
+const routes={};
+// Paths use authored M/H/V/Q geometry; no layout measurement occurs during a seek.
+function routePoints(d){
+ const parts=d.match(/[MHVQ]|-?\d+(?:\.\d+)?/g),points=[];let at=0,x=0,y=0;
+ while(at<parts.length){
+  const cmd=parts[at++];
+  if(cmd==='M'){x=Number(parts[at++]);y=Number(parts[at++]);points.push({x,y});continue}
+  const sx=x,sy=y;
+  if(cmd==='Q'){
+   const cx=Number(parts[at++]),cy=Number(parts[at++]),ex=Number(parts[at++]),ey=Number(parts[at++]);
+   for(let i=1;i<=24;i++){const t=i/24,u=1-t;points.push({x:u*u*sx+2*u*t*cx+t*t*ex,y:u*u*sy+2*u*t*cy+t*t*ey})}
+   x=ex;y=ey;
+  }else{
+   if(cmd==='H')x=Number(parts[at++]);else y=Number(parts[at++]);
+   points.push({x,y});
+  }
+ }
+ const distance=[0];for(let i=1;i<points.length;i++)distance.push(distance[i-1]+Math.hypot(points[i].x-points[i-1].x,points[i].y-points[i-1].y));
+ return Array.from({length:81},(_,i)=>{
+  const target=distance[distance.length-1]*i/80;let n=1;while(n<distance.length-1&&distance[n]<target)n++;
+  const f=(target-distance[n-1])/(distance[n]-distance[n-1]||1);
+  return {x:points[n-1].x+(points[n].x-points[n-1].x)*f,y:points[n-1].y+(points[n].y-points[n-1].y)*f};
+ });
+}
+for(const path of document.querySelectorAll('path[id].route'))routes[path.id]=routePoints(path.getAttribute('d'));
+
+function move(dot,route,progress){
+ const points=routes[route],at=clamp(progress)*80,i=Math.min(79,Math.floor(at)),f=at-i;
+ dot.setAttribute('cx',points[i].x+(points[i+1].x-points[i].x)*f);
+ dot.setAttribute('cy',points[i].y+(points[i+1].y-points[i].y)*f);
+}
+function opacity(el,value){el.style.opacity=String(clamp(value))}
+// Abstract dialogue keeps the need slide free of additional clinical examples.
+const conversation=$('#conversation'),rows=[];
+const utteranceKinds=['일반','일반','자해','일반','자살','타해'];
+for(let i=0;i<utteranceKinds.length;i++){
+ const g=document.createElementNS('http://www.w3.org/2000/svg','g');
+ const kind=utteranceKinds[i],risk=kind!=='일반';
+ const widths=i%2?[71,104,64,56]:[105,63,77,42];let x=22;
+ const tokens=widths.map(w=>{const s=`<rect class="chat-token" x="${x}" y="65" width="${w}" height="11" rx="5.5" fill="${risk?'#b35870':'#756c77'}"/>`;x+=w+10;return s}).join('');
+ g.innerHTML=`<rect width="410" height="93" rx="12" fill="${risk?'#2e1e28':'#211f26'}"/><rect x="0" y="20" width="3" height="52" rx="1.5" fill="${risk?RED:'#756c77'}"/><text class="chat-kind${risk?' risk':''}" x="22" y="38">${kind}</text>${tokens}`;
+ conversation.append(g);rows.push({el:g,tokens:[...g.querySelectorAll('.chat-token')],side:i%2?68:0});
+}
+function need(t){
+ const scroll=mod(t,16.2)*40;
+ rows.forEach((row,i)=>{
+  const y=mod(i*108-scroll,648)-20;
+  row.el.setAttribute('transform',`translate(${row.side} ${y})`);
+  opacity(row.el,Math.min(clamp((y-48)/48),clamp((638-y)/48)));
+  row.tokens.forEach((el,j)=>opacity(el,clamp((612-y)/52-j*.18)));
+ });
+ const cycle=mod(t,8),risk=cycle>=4,p=mod(cycle,4)/4,dot=$('#need-dot');
+ dot.setAttribute('fill',risk?RED:NEUTRAL);
+ if(p<.44)move(dot,'need-in',p/.44);
+ else move(dot,risk?'need-risk':'need-safe',(p-.52)/.42);
+ opacity(dot,p<.44?1:p>.52&&p<.96?1:0);
+ $('#need-ring').setAttribute('stroke',risk&&p>.4&&p<.65?RED:SIGNAL);
+ $('#need-ring').setAttribute('stroke-width',String(1.5+1.5*Math.sin(Math.PI*clamp((p-.3)/.5))));
+ for(const [id,active] of [['need-risk-halo',risk],['need-safe-halo',!risk]]){
+  $('#'+id).setAttribute('r',String(active&&p>.8?25+17*Math.sin(Math.PI*clamp((p-.8)/.2)):25));
+ }
+}
+// Both lanes begin together. Durations illustrate generation overhead, not a measured speed ratio.
+const reasoningTokens=[...document.querySelectorAll('.reasoning-tokens span')];
+function intro(t){
+ const p=Math.max(0,t),fast=clamp(p/1.6),slow=clamp(p/8.2);
+ $('#compare-nimble-flow').style.strokeDashoffset=String(1-fast);
+ $('#compare-llm-flow').style.strokeDashoffset=String(1-slow);
+ for(const [id,progress] of [['compare-nimble-dot',fast],['compare-llm-dot',slow]]){
+  const dot=$('#'+id);dot.setAttribute('cx',String(448+796*progress));opacity(dot,progress<1?1:0);
+ }
+ reasoningTokens.forEach((el,i)=>opacity(el,.14+.86*clamp((p-.55-i*.36)/.2)));
+ const candidates=ease((p-.4)/.7);
+ $('#true-candidate').style.transform=`scaleX(${.94*candidates})`;
+ $('#false-candidate').style.transform=`scaleX(${.06*candidates})`;
+ opacity($('#nimble-decision'),.12+.88*ease((p-1.3)/.3));
+ const answer='죽고 싶다는 생각이 반복된다는 표현이 있어, 자살 사고와 관련된 위험 신호가 포착됩니다.',count=Math.floor(clamp((p-4.8)/3.4)*answer.length);
+ $('#llm-answer').textContent=count?answer.slice(0,count):'…';
+ opacity($('#llm-answer'),count?1:.25);
+}
+function data(t){
+ const p=Math.max(0,t),v=clamp((p-.2)/2.3),progress=(1-Math.cos(Math.PI*v))/2;
+ for(const [id,value] of [['record-count',3596]]){
+  const el=$('#'+id);el.textContent=Math.round(value*progress).toLocaleString('en-US');
+  el.style.transform=`scale(${1+.035*Math.sin(Math.PI*clamp((p-2.3)/.65))})`;
+ }
+}
+const quote='요즘 죽고 싶다는 생각이 계속 들어요.';
+function nimble(t){
+ const p=Math.max(0,t),count=Math.floor(clamp(p/2.1)*Array.from(quote).length);
+ $('#typed-quote').textContent=Array.from(quote).slice(0,count).join('');
+ opacity($('.quote-cursor'),p<2.2?(Math.floor(p*3)%2?1:.2):0);
+ const progress=(1-Math.cos(Math.PI*clamp((p-2.5)/1.1)))/2;
+ $('#criterion-progress').style.transform=`scaleX(${progress})`;
+ $('#criterion-score').textContent=`${Math.round(94*progress)}%`;
+ opacity($('#criterion-score'),ease((p-2.4)/.15));
+ const dot=$('#nimble-dot');
+ if(p<2.6)move(dot,'nimble-in',clamp((p-2.1)/.5));
+ else move(dot,'nimble-out',clamp((p-3.6)/.35));
+ opacity(dot,p>=2.1&&p<2.6||p>=3.6&&p<3.95?1:0);
+ opacity($('#result'),ease((p-3.95)/.35));
+}
+const loraCells=Array.from(document.querySelectorAll('.lora-cell'));
+function training(t){
+ const p=Math.max(0,t);
+ const draw=(id,start,duration)=>{ $('#'+id).style.strokeDashoffset=String(1-ease((p-start)/duration)); };
+ draw('training-original-flow',.25,.7);
+ opacity($('#evaluation-stage'),.25+.75*ease((p-.9)/.6));
+ document.querySelectorAll('.evaluation-models li').forEach((el,i)=>opacity(el,.2+.8*ease((p-1-i*.12)/.4)));
+ opacity($('#evaluation-condition'),ease((p-2)/.5));
+ draw('training-result-flow',2.3,.7);
+ draw('training-augment-flow',.5,1);
+ opacity($('#training-adult-card'),.25+.75*ease((p-1.4)/.5));
+ draw('training-adult-flow',2.1,1.2);
+ const learning=clamp((p-3.3)/2.6);
+ loraCells.forEach((cell,i)=>{
+  const delay=(i%10)*.045+(i>=10?.15:0),local=p-3.3-delay;
+  const reveal=ease(local/.35),settle=ease((p-5.4)/.5);
+  const pulse=local>0&&p<5.9?Math.pow(Math.sin(local*Math.PI*2),2):0;
+  const target=.5+((i*7)%10)*.045;
+  cell.style.setProperty('--hf-cell-y',`${8*(1-reveal)}px`);
+  cell.style.setProperty('--hf-cell-scale',String(.8+.2*reveal+.12*pulse*(1-settle)));
+  cell.style.setProperty('--hf-cell-opacity',String(.2*(1-reveal)+(target+.25*pulse*(1-settle))*reveal));
+ });
+ $('#lora-learning-progress').style.transform=`scaleX(${learning})`;
+}
+const painters={necessity:need,nimble_intro:intro,nimble,data,finetuning:training};
+const lengths={necessity:16.2,nimble_intro:8.6,nimble:4.6,data:3.2,finetuning:6.5};
+let activeId=null,liveClock=null,cycleCount=0;
+const motionQuery=matchMedia('(prefers-reduced-motion: reduce)');
+function isLive(){try{return Boolean(parent.document.querySelector('hyperframes-slideshow'))}catch{return false}}
+function stopClock(){liveClock?.kill();liveClock=null;}
+function staticScene(id){
+ painters[id]({necessity:3,nimble_intro:9,nimble:7,data:7,finetuning:6.5}[id]);
+ document.getElementById(id).querySelectorAll('svg>circle[id$="dot"]').forEach(el=>opacity(el,0));
+}
+function playScene(id){
+ stopClock();
+ if(motionQuery.matches){staticScene(id);return}
+ const clock={t:0};cycleCount=1;painters[id](0);
+ liveClock=gsap.timeline({paused:document.hidden,data:'live-scene',onComplete:()=>{if(id==='nimble_intro'||id==='nimble'||id==='data'||id==='finetuning')return;cycleCount++;liveClock?.restart()}});
+ liveClock.to(clock,{t:lengths[id],duration:lengths[id],ease:'none',onUpdate:()=>{
+  if(motionQuery.matches){stopClock();staticScene(id)}else painters[id](clock.t);
+ }},0);
+}
+function renderAt(t){
+ const current=scenes.find(s=>t>=s.start&&t<s.start+s.duration);
+ for(const s of scenes){const visible=s===current;s.el.style.opacity=visible?'1':'0';s.el.style.visibility=visible?'visible':'hidden';s.el.style.pointerEvents=visible?'auto':'none'}
+ if(!current){stopClock();activeId=null;return}
+ if(isLive()){
+  if(activeId!==current.id){activeId=current.id;playScene(current.id)}
+ }else{activeId=current.id;painters[current.id](t-current.start)}
+}
+window.__timelines=window.__timelines||{};
+const master={t:0},root=gsap.timeline({paused:true});
+root.to(master,{t:50,duration:50,ease:'none',onUpdate:()=>renderAt(master.t)},0);
+window.__timelines.root=root;
+for(const scene of scenes){
+ const time={t:0},tl=gsap.timeline({paused:true});
+ tl.to(time,{t:10,duration:10,ease:'none',onUpdate:()=>{if(!isLive())painters[scene.id](time.t)}},0);
+ window.__timelines[scene.id]=tl;
+}
+window.__hfSetTime=t=>{root.seek(t,false);renderAt(t)};
+window.__deckState=()=>({scene:activeId,time:liveClock?.time()??null,iteration:liveClock?cycleCount:0,playing:liveClock?.isActive()??false,reduced:motionQuery.matches});
+document.addEventListener('visibilitychange',()=>liveClock?.paused(document.hidden));
+motionQuery.addEventListener('change',()=>{if(activeId&&isLive())playScene(activeId)});
+renderAt(0);
+window.addEventListener('load',()=>parent.postMessage({source:'hf-preview',type:'timeline',durationInFrames:1500,scenes:scenes.map(({id,start,duration})=>({id,start,duration}))},'*'));
+
+</script>
+</body></html>
