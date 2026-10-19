@@ -2,6 +2,15 @@
 
 대화 속 위기 신호 포착 모델 개발을 소개하는 5장짜리 HTML 발표입니다.
 
+## 공유 URL
+
+- 발표: <https://taoreunda.github.io/crisis-signal-presentation/>
+- 공개 저장소: <https://github.com/Taoreunda/crisis-signal-presentation>
+- GitHub Pages는 공개 저장소의 `main` 루트에서 배포합니다.
+- 발표 HTML·이미지·브라우저 실행 파일만 공개하며 상담 원본·가중치·실험 결과는 포함하지 않습니다.
+
+발표 수정은 이 폴더에서 합니다. 수정 후 발표 파일만 배포 저장소에 반영해 push하면 Pages가 갱신됩니다. 로컬 수정만으로 공유 URL이 바뀌지는 않습니다. 이 프로젝트 전체를 공개 저장소에 push하지 않습니다.
+
 ## 실행
 
 저장소 루트에서:
