@@ -1,0 +1,2431 @@
+{
+  "description": "발표 6~11장에 표시한 로컬·API 모델 집계값과 회차별 분모·실패·시간. 원본 추론·정답 계산을 다시 수행하지 않고 metrics.json에서 발췌. 처리 시간 슬라이드 삭제 후에도 회차별 시간·실패 기록은 출처 자료로 보존.",
+  "source": "outputs/model_comparison/2026-10-25_all_models_unified_review_145400_410756/metrics.json",
+  "source_sha256": "27ceba38541c8fd3d39a2d576c4d89e7c492b815979f5e43e50e46bb94ddbbd2",
+  "date": "2026-10-25",
+  "models": {
+    "nimble_9b": {
+      "name": "Nimble 9B",
+      "targets": {
+        "stage": {
+          "accuracy": {
+            "mean": 0.5105067985166873,
+            "sd": 0.0005352443781115083
+          },
+          "precision": {
+            "mean": 0.5772283249591114,
+            "sd": 0.0009909418043650288
+          },
+          "recall": {
+            "mean": 0.5132906076702141,
+            "sd": 0.0005436799100454133
+          },
+          "f1": {
+            "mean": 0.44969302605547745,
+            "sd": 0.00020280349126744902
+          },
+          "common_success_n": 3236,
+          "changed": 38,
+          "changed_rate": 0.011742892459826947,
+          "always_fn": 0,
+          "any_fn": 0,
+          "positive_unjudged_any_round": 0
+        },
+        "suicide": {
+          "accuracy": {
+            "mean": 0.9647315855181023,
+            "sd": 0.0
+          },
+          "precision": {
+            "mean": 0.8750033171456625,
+            "sd": 0.0013674206280066257
+          },
+          "recall": {
+            "mean": 0.7910731244064577,
+            "sd": 0.0016448725617937783
+          },
+          "f1": {
+            "mean": 0.8309223564600361,
+            "sd": 0.00029241245035974085
+          },
+          "common_success_n": 3204,
+          "changed": 2,
+          "changed_rate": 0.0006242197253433209,
+          "always_fn": 73,
+          "any_fn": 74,
+          "positive_unjudged_any_round": 0
+        },
+        "self_harm": {
+          "accuracy": {
+            "mean": 0.9447371139345109,
+            "sd": 0.00017891238586599208
+          },
+          "precision": {
+            "mean": 0.4094128966970255,
+            "sd": 0.0008332831237992992
+          },
+          "recall": {
+            "mean": 0.9133858267716536,
+            "sd": 0.0
+          },
+          "f1": {
+            "mean": 0.5653947342393132,
+            "sd": 0.0007948801997032243
+          },
+          "common_success_n": 3227,
+          "changed": 9,
+          "changed_rate": 0.0027889680818097306,
+          "always_fn": 11,
+          "any_fn": 11,
+          "positive_unjudged_any_round": 0
+        }
+      },
+      "rounds": [
+        {
+          "input_count": 3236,
+          "success": 3236,
+          "failed": 0,
+          "median_seconds": 0.558316201902926,
+          "p95_seconds": 0.8165301950648427,
+          "targets": {
+            "suicide": {
+              "n": 3204,
+              "eligible": 3204,
+              "excluded_reference": {
+                "(해당 없음)": 32
+              },
+              "failed": 0
+            },
+            "self_harm": {
+              "n": 3227,
+              "eligible": 3227,
+              "excluded_reference": {
+                "(해당 없음)": 9
+              },
+              "failed": 0
+            },
+            "stage": {
+              "n": 3236,
+              "eligible": 3236,
+              "excluded_reference": {},
+              "failed": 0
+            }
+          }
+        },
+        {
+          "input_count": 3236,
+          "success": 3236,
+          "failed": 0,
+          "median_seconds": 0.5507199461571872,
+          "p95_seconds": 0.6894793948158622,
+          "targets": {
+            "suicide": {
+              "n": 3204,
+              "eligible": 3204,
+              "excluded_reference": {
+                "(해당 없음)": 32
+              },
+              "failed": 0
+            },
+            "self_harm": {
+              "n": 3227,
+              "eligible": 3227,
+              "excluded_reference": {
+                "(해당 없음)": 9
+              },
+              "failed": 0
+            },
+            "stage": {
+              "n": 3236,
+              "eligible": 3236,
+              "excluded_reference": {},
+              "failed": 0
+            }
+          }
+        },
+        {
+          "input_count": 3236,
+          "success": 3236,
+          "failed": 0,
+          "median_seconds": 0.5515767550095916,
+          "p95_seconds": 0.690746411215514,
+          "targets": {
+            "suicide": {
+              "n": 3204,
+              "eligible": 3204,
+              "excluded_reference": {
+                "(해당 없음)": 32
+              },
+              "failed": 0
+            },
+            "self_harm": {
+              "n": 3227,
+              "eligible": 3227,
+              "excluded_reference": {
+                "(해당 없음)": 9
+              },
+              "failed": 0
+            },
+            "stage": {
+              "n": 3236,
+              "eligible": 3236,
+              "excluded_reference": {},
+              "failed": 0
+            }
+          }
+        }
+      ]
+    },
+    "laya_322m": {
+      "name": "Laya 322M",
+      "targets": {
+        "stage": {
+          "accuracy": {
+            "mean": 0.2126081582200247,
+            "sd": 0.0
+          },
+          "precision": {
+            "mean": 0.48482686654431467,
+            "sd": 0.0
+          },
+          "recall": {
+            "mean": 0.20766535389358048,
+            "sd": 0.0
+          },
+          "f1": {
+            "mean": 0.10960715617336908,
+            "sd": 0.0
+          },
+          "common_success_n": 3236,
+          "changed": 0,
+          "changed_rate": 0.0,
+          "always_fn": 0,
+          "any_fn": 0,
+          "positive_unjudged_any_round": 0
+        },
+        "suicide": {
+          "accuracy": {
+            "mean": 0.15948813982521848,
+            "sd": 0.0
+          },
+          "precision": {
+            "mean": 0.11225165562913907,
+            "sd": 0.0
+          },
+          "recall": {
+            "mean": 0.9658119658119658,
+            "sd": 0.0
+          },
+          "f1": {
+            "mean": 0.20112726194007713,
+            "sd": 0.0
+          },
+          "common_success_n": 3204,
+          "changed": 0,
+          "changed_rate": 0.0,
+          "always_fn": 12,
+          "any_fn": 12,
+          "positive_unjudged_any_round": 0
+        },
+        "self_harm": {
+          "accuracy": {
+            "mean": 0.04369383328168577,
+            "sd": 0.0
+          },
+          "precision": {
+            "mean": 0.03952692187986306,
+            "sd": 0.0
+          },
+          "recall": {
+            "mean": 1.0,
+            "sd": 0.0
+          },
+          "f1": {
+            "mean": 0.07604790419161676,
+            "sd": 0.0
+          },
+          "common_success_n": 3227,
+          "changed": 0,
+          "changed_rate": 0.0,
+          "always_fn": 0,
+          "any_fn": 0,
+          "positive_unjudged_any_round": 0
+        }
+      },
+      "rounds": [
+        {
+          "input_count": 3236,
+          "success": 3236,
+          "failed": 0,
+          "median_seconds": 0.24389442708343267,
+          "p95_seconds": 0.3130651148967445,
+          "targets": {
+            "suicide": {
+              "n": 3204,
+              "eligible": 3204,
+              "excluded_reference": {
+                "(해당 없음)": 32
+              },
+              "failed": 0
+            },
+            "self_harm": {
+              "n": 3227,
+              "eligible": 3227,
+              "excluded_reference": {
+                "(해당 없음)": 9
+              },
+              "failed": 0
+            },
+            "stage": {
+              "n": 3236,
+              "eligible": 3236,
+              "excluded_reference": {},
+              "failed": 0
+            }
+          }
+        },
+        {
+          "input_count": 3236,
+          "success": 3236,
+          "failed": 0,
+          "median_seconds": 0.24514053761959076,
+          "p95_seconds": 0.3141710562631488,
+          "targets": {
+            "suicide": {
+              "n": 3204,
+              "eligible": 3204,
+              "excluded_reference": {
+                "(해당 없음)": 32
+              },
+              "failed": 0
+            },
+            "self_harm": {
+              "n": 3227,
+              "eligible": 3227,
+              "excluded_reference": {
+                "(해당 없음)": 9
+              },
+              "failed": 0
+            },
+            "stage": {
+              "n": 3236,
+              "eligible": 3236,
+              "excluded_reference": {},
+              "failed": 0
+            }
+          }
+        },
+        {
+          "input_count": 3236,
+          "success": 3236,
+          "failed": 0,
+          "median_seconds": 0.24557992373593152,
+          "p95_seconds": 0.3140768688172102,
+          "targets": {
+            "suicide": {
+              "n": 3204,
+              "eligible": 3204,
+              "excluded_reference": {
+                "(해당 없음)": 32
+              },
+              "failed": 0
+            },
+            "self_harm": {
+              "n": 3227,
+              "eligible": 3227,
+              "excluded_reference": {
+                "(해당 없음)": 9
+              },
+              "failed": 0
+            },
+            "stage": {
+              "n": 3236,
+              "eligible": 3236,
+              "excluded_reference": {},
+              "failed": 0
+            }
+          }
+        }
+      ]
+    },
+    "laya_421m": {
+      "name": "Laya 421M",
+      "targets": {
+        "stage": {
+          "accuracy": {
+            "mean": 0.1868801692784705,
+            "sd": 3.3442085764775825e-05
+          },
+          "precision": {
+            "mean": 0.08983803647556202,
+            "sd": 6.950202561798216e-06
+          },
+          "recall": {
+            "mean": 0.19395504869095018,
+            "sd": 1.046019148811736e-06
+          },
+          "f1": {
+            "mean": 0.0696904334535907,
+            "sd": 1.1586612359589843e-05
+          },
+          "common_success_n": 3226,
+          "changed": 0,
+          "changed_rate": 0.0,
+          "always_fn": 0,
+          "any_fn": 0,
+          "positive_unjudged_any_round": 0
+        },
+        "suicide": {
+          "accuracy": {
+            "mean": 0.10893155495975924,
+            "sd": 1.9688509625145807e-05
+          },
+          "precision": {
+            "mean": 0.1080939971363696,
+            "sd": 1.955549352761386e-05
+          },
+          "recall": {
+            "mean": 1.0,
+            "sd": 0.0
+          },
+          "f1": {
+            "mean": 0.19509896670875565,
+            "sd": 3.185232565216221e-05
+          },
+          "common_success_n": 3194,
+          "changed": 0,
+          "changed_rate": 0.0,
+          "always_fn": 0,
+          "any_fn": 0,
+          "positive_unjudged_any_round": 6
+        },
+        "self_harm": {
+          "accuracy": {
+            "mean": 0.0394695957918297,
+            "sd": 7.0828165422329995e-06
+          },
+          "precision": {
+            "mean": 0.037675143520631844,
+            "sd": 6.773433958915006e-06
+          },
+          "recall": {
+            "mean": 1.0,
+            "sd": 0.0
+          },
+          "f1": {
+            "mean": 0.07261452435759783,
+            "sd": 1.2580978849130489e-05
+          },
+          "common_success_n": 3217,
+          "changed": 0,
+          "changed_rate": 0.0,
+          "always_fn": 0,
+          "any_fn": 0,
+          "positive_unjudged_any_round": 6
+        }
+      },
+      "rounds": [
+        {
+          "input_count": 3236,
+          "success": 3227,
+          "failed": 9,
+          "median_seconds": 0.6844393985811621,
+          "p95_seconds": 1.0867805327288806,
+          "targets": {
+            "suicide": {
+              "n": 3195,
+              "eligible": 3204,
+              "excluded_reference": {
+                "(해당 없음)": 32
+              },
+              "failed": 9
+            },
+            "self_harm": {
+              "n": 3218,
+              "eligible": 3227,
+              "excluded_reference": {
+                "(해당 없음)": 9
+              },
+              "failed": 9
+            },
+            "stage": {
+              "n": 3227,
+              "eligible": 3236,
+              "excluded_reference": {},
+              "failed": 9
+            }
+          }
+        },
+        {
+          "input_count": 3236,
+          "success": 3227,
+          "failed": 9,
+          "median_seconds": 0.6832351428456604,
+          "p95_seconds": 1.0860030869953334,
+          "targets": {
+            "suicide": {
+              "n": 3195,
+              "eligible": 3204,
+              "excluded_reference": {
+                "(해당 없음)": 32
+              },
+              "failed": 9
+            },
+            "self_harm": {
+              "n": 3218,
+              "eligible": 3227,
+              "excluded_reference": {
+                "(해당 없음)": 9
+              },
+              "failed": 9
+            },
+            "stage": {
+              "n": 3227,
+              "eligible": 3236,
+              "excluded_reference": {},
+              "failed": 9
+            }
+          }
+        },
+        {
+          "input_count": 3236,
+          "success": 3226,
+          "failed": 10,
+          "median_seconds": 0.6837018891237676,
+          "p95_seconds": 1.0856653517112136,
+          "targets": {
+            "suicide": {
+              "n": 3194,
+              "eligible": 3204,
+              "excluded_reference": {
+                "(해당 없음)": 32
+              },
+              "failed": 10
+            },
+            "self_harm": {
+              "n": 3217,
+              "eligible": 3227,
+              "excluded_reference": {
+                "(해당 없음)": 9
+              },
+              "failed": 10
+            },
+            "stage": {
+              "n": 3226,
+              "eligible": 3236,
+              "excluded_reference": {},
+              "failed": 10
+            }
+          }
+        }
+      ]
+    },
+    "clef_flash_9b": {
+      "name": "Clef Flash 9B",
+      "targets": {
+        "stage": {
+          "accuracy": {
+            "mean": 0.4888751545117429,
+            "sd": 0.0
+          },
+          "precision": {
+            "mean": 0.578597616026976,
+            "sd": 0.0
+          },
+          "recall": {
+            "mean": 0.4898376102633334,
+            "sd": 0.0
+          },
+          "f1": {
+            "mean": 0.40116275731060147,
+            "sd": 0.0
+          },
+          "common_success_n": 3236,
+          "changed": 0,
+          "changed_rate": 0.0,
+          "always_fn": 0,
+          "any_fn": 0,
+          "positive_unjudged_any_round": 0
+        },
+        "suicide": {
+          "accuracy": {
+            "mean": 0.9603620474406991,
+            "sd": 0.0
+          },
+          "precision": {
+            "mean": 0.9,
+            "sd": 0.0
+          },
+          "recall": {
+            "mean": 0.717948717948718,
+            "sd": 0.0
+          },
+          "f1": {
+            "mean": 0.7987321711568938,
+            "sd": 0.0
+          },
+          "common_success_n": 3204,
+          "changed": 0,
+          "changed_rate": 0.0,
+          "always_fn": 99,
+          "any_fn": 99,
+          "positive_unjudged_any_round": 0
+        },
+        "self_harm": {
+          "accuracy": {
+            "mean": 0.9854353889061047,
+            "sd": 0.0
+          },
+          "precision": {
+            "mean": 0.8174603174603174,
+            "sd": 0.0
+          },
+          "recall": {
+            "mean": 0.8110236220472441,
+            "sd": 0.0
+          },
+          "f1": {
+            "mean": 0.8142292490118577,
+            "sd": 0.0
+          },
+          "common_success_n": 3227,
+          "changed": 0,
+          "changed_rate": 0.0,
+          "always_fn": 24,
+          "any_fn": 24,
+          "positive_unjudged_any_round": 0
+        }
+      },
+      "rounds": [
+        {
+          "input_count": 3236,
+          "success": 3236,
+          "failed": 0,
+          "median_seconds": 0.42743554804474115,
+          "p95_seconds": 0.5393889769911766,
+          "targets": {
+            "suicide": {
+              "n": 3204,
+              "eligible": 3204,
+              "excluded_reference": {
+                "(해당 없음)": 32
+              },
+              "failed": 0
+            },
+            "self_harm": {
+              "n": 3227,
+              "eligible": 3227,
+              "excluded_reference": {
+                "(해당 없음)": 9
+              },
+              "failed": 0
+            },
+            "stage": {
+              "n": 3236,
+              "eligible": 3236,
+              "excluded_reference": {},
+              "failed": 0
+            }
+          }
+        },
+        {
+          "input_count": 3236,
+          "success": 3236,
+          "failed": 0,
+          "median_seconds": 0.42862040316686034,
+          "p95_seconds": 0.5410865619778633,
+          "targets": {
+            "suicide": {
+              "n": 3204,
+              "eligible": 3204,
+              "excluded_reference": {
+                "(해당 없음)": 32
+              },
+              "failed": 0
+            },
+            "self_harm": {
+              "n": 3227,
+              "eligible": 3227,
+              "excluded_reference": {
+                "(해당 없음)": 9
+              },
+              "failed": 0
+            },
+            "stage": {
+              "n": 3236,
+              "eligible": 3236,
+              "excluded_reference": {},
+              "failed": 0
+            }
+          }
+        },
+        {
+          "input_count": 3236,
+          "success": 3236,
+          "failed": 0,
+          "median_seconds": 0.4277612406294793,
+          "p95_seconds": 0.540760463103652,
+          "targets": {
+            "suicide": {
+              "n": 3204,
+              "eligible": 3204,
+              "excluded_reference": {
+                "(해당 없음)": 32
+              },
+              "failed": 0
+            },
+            "self_harm": {
+              "n": 3227,
+              "eligible": 3227,
+              "excluded_reference": {
+                "(해당 없음)": 9
+              },
+              "failed": 0
+            },
+            "stage": {
+              "n": 3236,
+              "eligible": 3236,
+              "excluded_reference": {},
+              "failed": 0
+            }
+          }
+        }
+      ]
+    },
+    "clef_27b": {
+      "name": "Clef 27B",
+      "targets": {
+        "stage": {
+          "accuracy": {
+            "mean": 0.5398640296662547,
+            "sd": 0.0
+          },
+          "precision": {
+            "mean": 0.5963876857506478,
+            "sd": 0.0
+          },
+          "recall": {
+            "mean": 0.5404464555222158,
+            "sd": 0.0
+          },
+          "f1": {
+            "mean": 0.4801962838426374,
+            "sd": 0.0
+          },
+          "common_success_n": 3236,
+          "changed": 0,
+          "changed_rate": 0.0,
+          "always_fn": 0,
+          "any_fn": 0,
+          "positive_unjudged_any_round": 0
+        },
+        "suicide": {
+          "accuracy": {
+            "mean": 0.9756554307116105,
+            "sd": 0.0
+          },
+          "precision": {
+            "mean": 0.9099099099099099,
+            "sd": 0.0
+          },
+          "recall": {
+            "mean": 0.8632478632478633,
+            "sd": 0.0
+          },
+          "f1": {
+            "mean": 0.8859649122807017,
+            "sd": 0.0
+          },
+          "common_success_n": 3204,
+          "changed": 0,
+          "changed_rate": 0.0,
+          "always_fn": 48,
+          "any_fn": 48,
+          "positive_unjudged_any_round": 0
+        },
+        "self_harm": {
+          "accuracy": {
+            "mean": 0.9107530213820886,
+            "sd": 0.0
+          },
+          "precision": {
+            "mean": 0.2982456140350877,
+            "sd": 0.0
+          },
+          "recall": {
+            "mean": 0.937007874015748,
+            "sd": 0.0
+          },
+          "f1": {
+            "mean": 0.4524714828897338,
+            "sd": 0.0
+          },
+          "common_success_n": 3227,
+          "changed": 0,
+          "changed_rate": 0.0,
+          "always_fn": 8,
+          "any_fn": 8,
+          "positive_unjudged_any_round": 0
+        }
+      },
+      "rounds": [
+        {
+          "input_count": 3236,
+          "success": 3236,
+          "failed": 0,
+          "median_seconds": 1.3460959820076823,
+          "p95_seconds": 1.7441130578517914,
+          "targets": {
+            "suicide": {
+              "n": 3204,
+              "eligible": 3204,
+              "excluded_reference": {
+                "(해당 없음)": 32
+              },
+              "failed": 0
+            },
+            "self_harm": {
+              "n": 3227,
+              "eligible": 3227,
+              "excluded_reference": {
+                "(해당 없음)": 9
+              },
+              "failed": 0
+            },
+            "stage": {
+              "n": 3236,
+              "eligible": 3236,
+              "excluded_reference": {},
+              "failed": 0
+            }
+          }
+        },
+        {
+          "input_count": 3236,
+          "success": 3236,
+          "failed": 0,
+          "median_seconds": 1.3489959882572293,
+          "p95_seconds": 1.74702523695305,
+          "targets": {
+            "suicide": {
+              "n": 3204,
+              "eligible": 3204,
+              "excluded_reference": {
+                "(해당 없음)": 32
+              },
+              "failed": 0
+            },
+            "self_harm": {
+              "n": 3227,
+              "eligible": 3227,
+              "excluded_reference": {
+                "(해당 없음)": 9
+              },
+              "failed": 0
+            },
+            "stage": {
+              "n": 3236,
+              "eligible": 3236,
+              "excluded_reference": {},
+              "failed": 0
+            }
+          }
+        },
+        {
+          "input_count": 3236,
+          "success": 3236,
+          "failed": 0,
+          "median_seconds": 1.3459518384188414,
+          "p95_seconds": 1.7434938000515103,
+          "targets": {
+            "suicide": {
+              "n": 3204,
+              "eligible": 3204,
+              "excluded_reference": {
+                "(해당 없음)": 32
+              },
+              "failed": 0
+            },
+            "self_harm": {
+              "n": 3227,
+              "eligible": 3227,
+              "excluded_reference": {
+                "(해당 없음)": 9
+              },
+              "failed": 0
+            },
+            "stage": {
+              "n": 3236,
+              "eligible": 3236,
+              "excluded_reference": {},
+              "failed": 0
+            }
+          }
+        }
+      ]
+    },
+    "pplx_decider_27b": {
+      "name": "pplx-decider 27B",
+      "targets": {
+        "stage": {
+          "accuracy": {
+            "mean": 0.4869180057684384,
+            "sd": 0.0007136591708153551
+          },
+          "precision": {
+            "mean": 0.5761499702112027,
+            "sd": 0.001220694675948858
+          },
+          "recall": {
+            "mean": 0.4868394622558672,
+            "sd": 0.0007077304629857475
+          },
+          "f1": {
+            "mean": 0.4136452626308851,
+            "sd": 0.0005819219266253301
+          },
+          "common_success_n": 3236,
+          "changed": 48,
+          "changed_rate": 0.014833127317676144,
+          "always_fn": 0,
+          "any_fn": 0,
+          "positive_unjudged_any_round": 0
+        },
+        "suicide": {
+          "accuracy": {
+            "mean": 0.962234706616729,
+            "sd": 0.0005405901396906942
+          },
+          "precision": {
+            "mean": 0.9097356380274529,
+            "sd": 0.0022454141125066536
+          },
+          "recall": {
+            "mean": 0.7274453941120608,
+            "sd": 0.0032897451235876208
+          },
+          "f1": {
+            "mean": 0.8084414933097955,
+            "sd": 0.0029186597090370046
+          },
+          "common_success_n": 3204,
+          "changed": 9,
+          "changed_rate": 0.0028089887640449437,
+          "always_fn": 92,
+          "any_fn": 100,
+          "positive_unjudged_any_round": 0
+        },
+        "self_harm": {
+          "accuracy": {
+            "mean": 0.9461832455324863,
+            "sd": 0.0007156495434640965
+          },
+          "precision": {
+            "mean": 0.41526499523960647,
+            "sd": 0.0038477802770492267
+          },
+          "recall": {
+            "mean": 0.900262467191601,
+            "sd": 0.004546065111729328
+          },
+          "f1": {
+            "mean": 0.5683599108102366,
+            "sd": 0.004508678921290503
+          },
+          "common_success_n": 3227,
+          "changed": 16,
+          "changed_rate": 0.004958165478772854,
+          "always_fn": 12,
+          "any_fn": 13,
+          "positive_unjudged_any_round": 0
+        }
+      },
+      "rounds": [
+        {
+          "input_count": 3236,
+          "success": 3236,
+          "failed": 0,
+          "median_seconds": 1.6299039830919355,
+          "p95_seconds": 2.129813550040126,
+          "targets": {
+            "suicide": {
+              "n": 3204,
+              "eligible": 3204,
+              "excluded_reference": {
+                "(해당 없음)": 32
+              },
+              "failed": 0
+            },
+            "self_harm": {
+              "n": 3227,
+              "eligible": 3227,
+              "excluded_reference": {
+                "(해당 없음)": 9
+              },
+              "failed": 0
+            },
+            "stage": {
+              "n": 3236,
+              "eligible": 3236,
+              "excluded_reference": {},
+              "failed": 0
+            }
+          }
+        },
+        {
+          "input_count": 3236,
+          "success": 3236,
+          "failed": 0,
+          "median_seconds": 1.6313890086021274,
+          "p95_seconds": 2.1292151920497417,
+          "targets": {
+            "suicide": {
+              "n": 3204,
+              "eligible": 3204,
+              "excluded_reference": {
+                "(해당 없음)": 32
+              },
+              "failed": 0
+            },
+            "self_harm": {
+              "n": 3227,
+              "eligible": 3227,
+              "excluded_reference": {
+                "(해당 없음)": 9
+              },
+              "failed": 0
+            },
+            "stage": {
+              "n": 3236,
+              "eligible": 3236,
+              "excluded_reference": {},
+              "failed": 0
+            }
+          }
+        },
+        {
+          "input_count": 3236,
+          "success": 3236,
+          "failed": 0,
+          "median_seconds": 1.6307113047223538,
+          "p95_seconds": 2.129335679113865,
+          "targets": {
+            "suicide": {
+              "n": 3204,
+              "eligible": 3204,
+              "excluded_reference": {
+                "(해당 없음)": 32
+              },
+              "failed": 0
+            },
+            "self_harm": {
+              "n": 3227,
+              "eligible": 3227,
+              "excluded_reference": {
+                "(해당 없음)": 9
+              },
+              "failed": 0
+            },
+            "stage": {
+              "n": 3236,
+              "eligible": 3236,
+              "excluded_reference": {},
+              "failed": 0
+            }
+          }
+        }
+      ]
+    },
+    "tev1_4b": {
+      "name": "Tev1 4B",
+      "targets": {
+        "stage": {
+          "accuracy": {
+            "mean": 0.44190358467243507,
+            "sd": 0.0005352443781115083
+          },
+          "precision": {
+            "mean": 0.5806874975710759,
+            "sd": 0.01336691664131958
+          },
+          "recall": {
+            "mean": 0.44452490563389124,
+            "sd": 0.0005096339543106909
+          },
+          "f1": {
+            "mean": 0.3512653168993281,
+            "sd": 0.000983634647327524
+          },
+          "common_success_n": 3236,
+          "changed": 37,
+          "changed_rate": 0.011433868974042027,
+          "always_fn": 0,
+          "any_fn": 0,
+          "positive_unjudged_any_round": 0
+        },
+        "suicide": {
+          "accuracy": {
+            "mean": 0.9575530586766542,
+            "sd": 0.0
+          },
+          "precision": {
+            "mean": 0.7628361858190709,
+            "sd": 0.0
+          },
+          "recall": {
+            "mean": 0.8888888888888888,
+            "sd": 0.0
+          },
+          "f1": {
+            "mean": 0.8210526315789474,
+            "sd": 0.0
+          },
+          "common_success_n": 3204,
+          "changed": 2,
+          "changed_rate": 0.0006242197253433209,
+          "always_fn": 39,
+          "any_fn": 39,
+          "positive_unjudged_any_round": 0
+        },
+        "self_harm": {
+          "accuracy": {
+            "mean": 0.8878215060427642,
+            "sd": 0.0
+          },
+          "precision": {
+            "mean": 0.24511930585683298,
+            "sd": 0.0
+          },
+          "recall": {
+            "mean": 0.889763779527559,
+            "sd": 0.0
+          },
+          "f1": {
+            "mean": 0.3843537414965986,
+            "sd": 0.0
+          },
+          "common_success_n": 3227,
+          "changed": 8,
+          "changed_rate": 0.002479082739386427,
+          "always_fn": 12,
+          "any_fn": 16,
+          "positive_unjudged_any_round": 0
+        }
+      },
+      "rounds": [
+        {
+          "input_count": 3236,
+          "success": 3236,
+          "failed": 0,
+          "median_seconds": 0.36516309808939695,
+          "p95_seconds": 0.46842071413993835,
+          "targets": {
+            "suicide": {
+              "n": 3204,
+              "eligible": 3204,
+              "excluded_reference": {
+                "(해당 없음)": 32
+              },
+              "failed": 0
+            },
+            "self_harm": {
+              "n": 3227,
+              "eligible": 3227,
+              "excluded_reference": {
+                "(해당 없음)": 9
+              },
+              "failed": 0
+            },
+            "stage": {
+              "n": 3236,
+              "eligible": 3236,
+              "excluded_reference": {},
+              "failed": 0
+            }
+          }
+        },
+        {
+          "input_count": 3236,
+          "success": 3236,
+          "failed": 0,
+          "median_seconds": 0.3657104664016515,
+          "p95_seconds": 0.46808616584166884,
+          "targets": {
+            "suicide": {
+              "n": 3204,
+              "eligible": 3204,
+              "excluded_reference": {
+                "(해당 없음)": 32
+              },
+              "failed": 0
+            },
+            "self_harm": {
+              "n": 3227,
+              "eligible": 3227,
+              "excluded_reference": {
+                "(해당 없음)": 9
+              },
+              "failed": 0
+            },
+            "stage": {
+              "n": 3236,
+              "eligible": 3236,
+              "excluded_reference": {},
+              "failed": 0
+            }
+          }
+        },
+        {
+          "input_count": 3236,
+          "success": 3236,
+          "failed": 0,
+          "median_seconds": 0.3659425044897944,
+          "p95_seconds": 0.46936609130352736,
+          "targets": {
+            "suicide": {
+              "n": 3204,
+              "eligible": 3204,
+              "excluded_reference": {
+                "(해당 없음)": 32
+              },
+              "failed": 0
+            },
+            "self_harm": {
+              "n": 3227,
+              "eligible": 3227,
+              "excluded_reference": {
+                "(해당 없음)": 9
+              },
+              "failed": 0
+            },
+            "stage": {
+              "n": 3236,
+              "eligible": 3236,
+              "excluded_reference": {},
+              "failed": 0
+            }
+          }
+        }
+      ]
+    },
+    "tev1_08b": {
+      "name": "Tev1 0.8B",
+      "targets": {
+        "stage": {
+          "accuracy": {
+            "mean": 0.2034404614750721,
+            "sd": 0.00035682958540767754
+          },
+          "precision": {
+            "mean": 0.24682539837735687,
+            "sd": 0.0010556876429494888
+          },
+          "recall": {
+            "mean": 0.21119953668389976,
+            "sd": 0.0003539191472530462
+          },
+          "f1": {
+            "mean": 0.08830090385794861,
+            "sd": 0.0003383158800797811
+          },
+          "common_success_n": 3236,
+          "changed": 18,
+          "changed_rate": 0.005562422744128554,
+          "always_fn": 0,
+          "any_fn": 0,
+          "positive_unjudged_any_round": 0
+        },
+        "suicide": {
+          "accuracy": {
+            "mean": 0.8935705368289638,
+            "sd": 0.0
+          },
+          "precision": {
+            "mean": 0.5904640272456364,
+            "sd": 0.0036867833281585397
+          },
+          "recall": {
+            "mean": 0.09306742640075974,
+            "sd": 0.0032897451235876047
+          },
+          "f1": {
+            "mean": 0.16076951714006862,
+            "sd": 0.004754177712425058
+          },
+          "common_success_n": 3204,
+          "changed": 14,
+          "changed_rate": 0.004369538077403246,
+          "always_fn": 314,
+          "any_fn": 322,
+          "positive_unjudged_any_round": 0
+        },
+        "self_harm": {
+          "accuracy": {
+            "mean": 0.6283441793203182,
+            "sd": 0.0012523867010621368
+          },
+          "precision": {
+            "mean": 0.08788087061529931,
+            "sd": 9.256738530089928e-05
+          },
+          "recall": {
+            "mean": 0.900262467191601,
+            "sd": 0.004546065111729328
+          },
+          "f1": {
+            "mean": 0.1601301720130172,
+            "sd": 0.00022546454026930923
+          },
+          "common_success_n": 3227,
+          "changed": 63,
+          "changed_rate": 0.019522776572668113,
+          "always_fn": 12,
+          "any_fn": 13,
+          "positive_unjudged_any_round": 0
+        }
+      },
+      "rounds": [
+        {
+          "input_count": 3236,
+          "success": 3236,
+          "failed": 0,
+          "median_seconds": 0.12880367483012378,
+          "p95_seconds": 0.16055918112397194,
+          "targets": {
+            "suicide": {
+              "n": 3204,
+              "eligible": 3204,
+              "excluded_reference": {
+                "(해당 없음)": 32
+              },
+              "failed": 0
+            },
+            "self_harm": {
+              "n": 3227,
+              "eligible": 3227,
+              "excluded_reference": {
+                "(해당 없음)": 9
+              },
+              "failed": 0
+            },
+            "stage": {
+              "n": 3236,
+              "eligible": 3236,
+              "excluded_reference": {},
+              "failed": 0
+            }
+          }
+        },
+        {
+          "input_count": 3236,
+          "success": 3236,
+          "failed": 0,
+          "median_seconds": 0.12989284005016088,
+          "p95_seconds": 0.16236988501623273,
+          "targets": {
+            "suicide": {
+              "n": 3204,
+              "eligible": 3204,
+              "excluded_reference": {
+                "(해당 없음)": 32
+              },
+              "failed": 0
+            },
+            "self_harm": {
+              "n": 3227,
+              "eligible": 3227,
+              "excluded_reference": {
+                "(해당 없음)": 9
+              },
+              "failed": 0
+            },
+            "stage": {
+              "n": 3236,
+              "eligible": 3236,
+              "excluded_reference": {},
+              "failed": 0
+            }
+          }
+        },
+        {
+          "input_count": 3236,
+          "success": 3236,
+          "failed": 0,
+          "median_seconds": 0.1298328738193959,
+          "p95_seconds": 0.1623260509222746,
+          "targets": {
+            "suicide": {
+              "n": 3204,
+              "eligible": 3204,
+              "excluded_reference": {
+                "(해당 없음)": 32
+              },
+              "failed": 0
+            },
+            "self_harm": {
+              "n": 3227,
+              "eligible": 3227,
+              "excluded_reference": {
+                "(해당 없음)": 9
+              },
+              "failed": 0
+            },
+            "stage": {
+              "n": 3236,
+              "eligible": 3236,
+              "excluded_reference": {},
+              "failed": 0
+            }
+          }
+        }
+      ]
+    },
+    "qwen35_9b": {
+      "name": "Qwen3.5 9B",
+      "targets": {
+        "stage": {
+          "accuracy": {
+            "mean": 0.42805599343706635,
+            "sd": 0.0002664632002315988
+          },
+          "precision": {
+            "mean": 0.6493197908756797,
+            "sd": 0.00011998901749512212
+          },
+          "recall": {
+            "mean": 0.4300661470087073,
+            "sd": 6.317865523351886e-05
+          },
+          "f1": {
+            "mean": 0.3289947653679982,
+            "sd": 0.0001275934021279728
+          },
+          "common_success_n": 3232,
+          "changed": 0,
+          "changed_rate": 0.0,
+          "always_fn": 0,
+          "any_fn": 0,
+          "positive_unjudged_any_round": 0
+        },
+        "suicide": {
+          "accuracy": {
+            "mean": 0.9753279152387225,
+            "sd": 1.3341649808076411e-05
+          },
+          "precision": {
+            "mean": 0.8777777777777778,
+            "sd": 0.0
+          },
+          "recall": {
+            "mean": 0.9002849002849003,
+            "sd": 0.0
+          },
+          "f1": {
+            "mean": 0.8888888888888888,
+            "sd": 0.0
+          },
+          "common_success_n": 3200,
+          "changed": 0,
+          "changed_rate": 0.0,
+          "always_fn": 35,
+          "any_fn": 35,
+          "positive_unjudged_any_round": 0
+        },
+        "self_harm": {
+          "accuracy": {
+            "mean": 0.8958139334600044,
+            "sd": 5.5937867541204114e-05
+          },
+          "precision": {
+            "mean": 0.2693156732891832,
+            "sd": 0.0
+          },
+          "recall": {
+            "mean": 0.9606299212598425,
+            "sd": 0.0
+          },
+          "f1": {
+            "mean": 0.4206896551724138,
+            "sd": 0.0
+          },
+          "common_success_n": 3223,
+          "changed": 0,
+          "changed_rate": 0.0,
+          "always_fn": 5,
+          "any_fn": 5,
+          "positive_unjudged_any_round": 0
+        }
+      },
+      "rounds": [
+        {
+          "input_count": 3236,
+          "success": 3236,
+          "failed": 0,
+          "median_seconds": 1.0652926112525165,
+          "p95_seconds": 1.2097237640991807,
+          "targets": {
+            "suicide": {
+              "n": 3204,
+              "eligible": 3204,
+              "excluded_reference": {
+                "(해당 없음)": 32
+              },
+              "failed": 0
+            },
+            "self_harm": {
+              "n": 3227,
+              "eligible": 3227,
+              "excluded_reference": {
+                "(해당 없음)": 9
+              },
+              "failed": 0
+            },
+            "stage": {
+              "n": 3236,
+              "eligible": 3236,
+              "excluded_reference": {},
+              "failed": 0
+            }
+          }
+        },
+        {
+          "input_count": 3236,
+          "success": 3233,
+          "failed": 3,
+          "median_seconds": 1.0613124056253582,
+          "p95_seconds": 1.2058419859968126,
+          "targets": {
+            "suicide": {
+              "n": 3201,
+              "eligible": 3204,
+              "excluded_reference": {
+                "(해당 없음)": 32
+              },
+              "failed": 3
+            },
+            "self_harm": {
+              "n": 3224,
+              "eligible": 3227,
+              "excluded_reference": {
+                "(해당 없음)": 9
+              },
+              "failed": 3
+            },
+            "stage": {
+              "n": 3233,
+              "eligible": 3236,
+              "excluded_reference": {},
+              "failed": 3
+            }
+          }
+        },
+        {
+          "input_count": 3236,
+          "success": 3233,
+          "failed": 3,
+          "median_seconds": 1.0621575021650642,
+          "p95_seconds": 1.2053115502931178,
+          "targets": {
+            "suicide": {
+              "n": 3201,
+              "eligible": 3204,
+              "excluded_reference": {
+                "(해당 없음)": 32
+              },
+              "failed": 3
+            },
+            "self_harm": {
+              "n": 3224,
+              "eligible": 3227,
+              "excluded_reference": {
+                "(해당 없음)": 9
+              },
+              "failed": 3
+            },
+            "stage": {
+              "n": 3233,
+              "eligible": 3236,
+              "excluded_reference": {},
+              "failed": 3
+            }
+          }
+        }
+      ]
+    },
+    "qwen38_27b": {
+      "name": "Qwen3.8 27B",
+      "targets": {
+        "stage": {
+          "accuracy": {
+            "mean": 0.5120040920202419,
+            "sd": 8.283346855813515e-05
+          },
+          "precision": {
+            "mean": 0.6116493647943696,
+            "sd": 4.844652691077452e-05
+          },
+          "recall": {
+            "mean": 0.5123294325464528,
+            "sd": 9.291529011322222e-05
+          },
+          "f1": {
+            "mean": 0.4011135404093362,
+            "sd": 4.308655021804751e-06
+          },
+          "common_success_n": 3233,
+          "changed": 0,
+          "changed_rate": 0.0,
+          "always_fn": 0,
+          "any_fn": 0,
+          "positive_unjudged_any_round": 0
+        },
+        "suicide": {
+          "accuracy": {
+            "mean": 0.9812675580079727,
+            "sd": 1.0132898588337818e-05
+          },
+          "precision": {
+            "mean": 0.9008264462809917,
+            "sd": 0.0
+          },
+          "recall": {
+            "mean": 0.9316239316239316,
+            "sd": 0.0
+          },
+          "f1": {
+            "mean": 0.9159663865546218,
+            "sd": 0.0
+          },
+          "common_success_n": 3201,
+          "changed": 0,
+          "changed_rate": 0.0,
+          "always_fn": 24,
+          "any_fn": 24,
+          "positive_unjudged_any_round": 0
+        },
+        "self_harm": {
+          "accuracy": {
+            "mean": 0.9333539859482761,
+            "sd": 3.579357595642144e-05
+          },
+          "precision": {
+            "mean": 0.36585365853658536,
+            "sd": 0.0
+          },
+          "recall": {
+            "mean": 0.9448818897637795,
+            "sd": 0.0
+          },
+          "f1": {
+            "mean": 0.5274725274725275,
+            "sd": 0.0
+          },
+          "common_success_n": 3224,
+          "changed": 0,
+          "changed_rate": 0.0,
+          "always_fn": 7,
+          "any_fn": 7,
+          "positive_unjudged_any_round": 0
+        }
+      },
+      "rounds": [
+        {
+          "input_count": 3236,
+          "success": 3233,
+          "failed": 3,
+          "median_seconds": 2.2567053525708616,
+          "p95_seconds": 2.770385209005326,
+          "targets": {
+            "suicide": {
+              "n": 3201,
+              "eligible": 3204,
+              "excluded_reference": {
+                "(해당 없음)": 32
+              },
+              "failed": 3
+            },
+            "self_harm": {
+              "n": 3224,
+              "eligible": 3227,
+              "excluded_reference": {
+                "(해당 없음)": 9
+              },
+              "failed": 3
+            },
+            "stage": {
+              "n": 3233,
+              "eligible": 3236,
+              "excluded_reference": {},
+              "failed": 3
+            }
+          }
+        },
+        {
+          "input_count": 3236,
+          "success": 3236,
+          "failed": 0,
+          "median_seconds": 2.2569267966318876,
+          "p95_seconds": 2.77082414412871,
+          "targets": {
+            "suicide": {
+              "n": 3204,
+              "eligible": 3204,
+              "excluded_reference": {
+                "(해당 없음)": 32
+              },
+              "failed": 0
+            },
+            "self_harm": {
+              "n": 3227,
+              "eligible": 3227,
+              "excluded_reference": {
+                "(해당 없음)": 9
+              },
+              "failed": 0
+            },
+            "stage": {
+              "n": 3236,
+              "eligible": 3236,
+              "excluded_reference": {},
+              "failed": 0
+            }
+          }
+        },
+        {
+          "input_count": 3236,
+          "success": 3236,
+          "failed": 0,
+          "median_seconds": 2.2583695345092565,
+          "p95_seconds": 2.771571298595518,
+          "targets": {
+            "suicide": {
+              "n": 3204,
+              "eligible": 3204,
+              "excluded_reference": {
+                "(해당 없음)": 32
+              },
+              "failed": 0
+            },
+            "self_harm": {
+              "n": 3227,
+              "eligible": 3227,
+              "excluded_reference": {
+                "(해당 없음)": 9
+              },
+              "failed": 0
+            },
+            "stage": {
+              "n": 3236,
+              "eligible": 3236,
+              "excluded_reference": {},
+              "failed": 0
+            }
+          }
+        }
+      ]
+    }
+  },
+  "exclusion_audit": "outputs/model_comparison/checks/2026-10-26_reference_exclusion_audit_161903_185815/verification.json",
+  "confusion_matrices": {
+    "selection": "항목별 로컬 모델 3회 평균 F1 1위, 공통 2회차",
+    "preview_source": "outputs/model_comparison/2026-10-26_confusion_matrix_preview_173050_711659/source.json",
+    "figures": [
+      {
+        "target": "suicide",
+        "model": "qwen38_27b",
+        "round": 2,
+        "order": [
+          "true",
+          "false"
+        ],
+        "counts": [
+          [
+            327,
+            24
+          ],
+          [
+            36,
+            2817
+          ]
+        ],
+        "row_percentages": [
+          [
+            93.16239316239316,
+            6.837606837606837
+          ],
+          [
+            1.2618296529968454,
+            98.73817034700315
+          ]
+        ],
+        "failed": 0
+      },
+      {
+        "target": "self_harm",
+        "model": "clef_flash_9b",
+        "round": 2,
+        "order": [
+          "true",
+          "false"
+        ],
+        "counts": [
+          [
+            103,
+            24
+          ],
+          [
+            23,
+            3077
+          ]
+        ],
+        "row_percentages": [
+          [
+            81.10236220472441,
+            18.89763779527559
+          ],
+          [
+            0.7419354838709677,
+            99.25806451612904
+          ]
+        ],
+        "failed": 0
+      }
+    ],
+    "source_matrix_axes": {
+      "rows": "reference",
+      "columns": "prediction"
+    },
+    "display_axes": {
+      "rows": "prediction",
+      "columns": "reference",
+      "percentage_denominator": "reference_column_total"
+    }
+  },
+  "api_models": {
+    "jev": {
+      "name": "Jev 1.13.0",
+      "display_aggregation": "3회 평균",
+      "targets": {
+        "stage": {
+          "accuracy": {
+            "mean": 0.5305933250927071,
+            "sd": 0.0015451174289246028
+          },
+          "precision": {
+            "mean": 0.6027591450463607,
+            "sd": 0.003495143160522617
+          },
+          "recall": {
+            "mean": 0.5304849177888157,
+            "sd": 0.0015242142565914218
+          },
+          "f1": {
+            "mean": 0.4612571803222673,
+            "sd": 0.0017253433621310901
+          },
+          "common_success_n": 3236,
+          "changed": 133,
+          "changed_rate": 0.041100123609394315,
+          "always_fn": 0,
+          "any_fn": 0,
+          "positive_unjudged_any_round": 0
+        },
+        "suicide": {
+          "accuracy": {
+            "mean": 0.9756554307116105,
+            "sd": 0.0003121098626716612
+          },
+          "precision": {
+            "mean": 0.8527169740016152,
+            "sd": 0.002203410389615971
+          },
+          "recall": {
+            "mean": 0.9401709401709402,
+            "sd": 0.0
+          },
+          "f1": {
+            "mean": 0.8943100377623856,
+            "sd": 0.0012118033316626743
+          },
+          "common_success_n": 3204,
+          "changed": 3,
+          "changed_rate": 0.0009363295880149813,
+          "always_fn": 21,
+          "any_fn": 21,
+          "positive_unjudged_any_round": 0
+        },
+        "self_harm": {
+          "accuracy": {
+            "mean": 0.8992872637124264,
+            "sd": 0.0005367371575980403
+          },
+          "precision": {
+            "mean": 0.27602093166427255,
+            "sd": 0.0010840867972676115
+          },
+          "recall": {
+            "mean": 0.9606299212598425,
+            "sd": 0.0
+          },
+          "f1": {
+            "mean": 0.42882514929298554,
+            "sd": 0.0013076530741879448
+          },
+          "common_success_n": 3227,
+          "changed": 5,
+          "changed_rate": 0.0015494267121165168,
+          "always_fn": 5,
+          "any_fn": 5,
+          "positive_unjudged_any_round": 0
+        }
+      },
+      "rounds": [
+        {
+          "input_count": 3236,
+          "success": 3236,
+          "failed": 0,
+          "targets": {
+            "stage": {
+              "n": 3236,
+              "eligible": 3236,
+              "excluded_reference": {},
+              "failed": 0
+            },
+            "suicide": {
+              "n": 3204,
+              "eligible": 3204,
+              "excluded_reference": {
+                "(해당 없음)": 32
+              },
+              "failed": 0
+            },
+            "self_harm": {
+              "n": 3227,
+              "eligible": 3227,
+              "excluded_reference": {
+                "(해당 없음)": 9
+              },
+              "failed": 0
+            }
+          },
+          "median_seconds": 0.22762695801793598,
+          "p95_seconds": 0.282951041997876
+        },
+        {
+          "input_count": 3236,
+          "success": 3236,
+          "failed": 0,
+          "targets": {
+            "stage": {
+              "n": 3236,
+              "eligible": 3236,
+              "excluded_reference": {},
+              "failed": 0
+            },
+            "suicide": {
+              "n": 3204,
+              "eligible": 3204,
+              "excluded_reference": {
+                "(해당 없음)": 32
+              },
+              "failed": 0
+            },
+            "self_harm": {
+              "n": 3227,
+              "eligible": 3227,
+              "excluded_reference": {
+                "(해당 없음)": 9
+              },
+              "failed": 0
+            }
+          },
+          "median_seconds": 0.30807562500012864,
+          "p95_seconds": 0.3893746670000837
+        },
+        {
+          "input_count": 3236,
+          "success": 3236,
+          "failed": 0,
+          "targets": {
+            "stage": {
+              "n": 3236,
+              "eligible": 3236,
+              "excluded_reference": {},
+              "failed": 0
+            },
+            "suicide": {
+              "n": 3204,
+              "eligible": 3204,
+              "excluded_reference": {
+                "(해당 없음)": 32
+              },
+              "failed": 0
+            },
+            "self_harm": {
+              "n": 3227,
+              "eligible": 3227,
+              "excluded_reference": {
+                "(해당 없음)": 9
+              },
+              "failed": 0
+            }
+          },
+          "median_seconds": 0.3039322499989794,
+          "p95_seconds": 0.3930045839988452
+        }
+      ]
+    },
+    "luna": {
+      "name": "GPT-5.6 Luna",
+      "display_aggregation": "1회차",
+      "targets": {
+        "stage": {
+          "n": 3236,
+          "accuracy": 0.5296662546353523,
+          "precision": 0.5565117674680006,
+          "recall": 0.5276044404833232,
+          "f1": 0.49125654642820543,
+          "average": "macro",
+          "per_class": {
+            "정상군": {
+              "precision": 0.6621468926553672,
+              "recall": 0.881203007518797,
+              "f1": 0.7561290322580645,
+              "support": 665,
+              "tp": 586,
+              "fp": 299,
+              "fn": 79
+            },
+            "관찰필요": {
+              "precision": 0.5628140703517588,
+              "recall": 0.17665615141955837,
+              "f1": 0.2689075630252101,
+              "support": 634,
+              "tp": 112,
+              "fp": 87,
+              "fn": 522
+            },
+            "상담필요": {
+              "precision": 0.4576271186440678,
+              "recall": 0.43478260869565216,
+              "f1": 0.44591246903385634,
+              "support": 621,
+              "tp": 270,
+              "fp": 320,
+              "fn": 351
+            },
+            "학대의심": {
+              "precision": 0.4321966693100714,
+              "recall": 0.8462732919254659,
+              "f1": 0.5721784776902887,
+              "support": 644,
+              "tp": 545,
+              "fp": 716,
+              "fn": 99
+            },
+            "응급": {
+              "precision": 0.6677740863787376,
+              "recall": 0.29910714285714285,
+              "f1": 0.4131551901336074,
+              "support": 672,
+              "tp": 201,
+              "fp": 100,
+              "fn": 471
+            }
+          },
+          "confusion_matrix": {
+            "정상군": {
+              "정상군": 586,
+              "관찰필요": 40,
+              "상담필요": 16,
+              "학대의심": 23,
+              "응급": 0
+            },
+            "관찰필요": {
+              "정상군": 266,
+              "관찰필요": 112,
+              "상담필요": 193,
+              "학대의심": 61,
+              "응급": 2
+            },
+            "상담필요": {
+              "정상군": 33,
+              "관찰필요": 43,
+              "상담필요": 270,
+              "학대의심": 267,
+              "응급": 8
+            },
+            "학대의심": {
+              "정상군": 0,
+              "관찰필요": 2,
+              "상담필요": 7,
+              "학대의심": 545,
+              "응급": 90
+            },
+            "응급": {
+              "정상군": 0,
+              "관찰필요": 2,
+              "상담필요": 104,
+              "학대의심": 365,
+              "응급": 201
+            }
+          },
+          "eligible": 3236,
+          "excluded_reference": {},
+          "failed": 0,
+          "pending": 0,
+          "coverage": 1.0
+        },
+        "suicide": {
+          "n": 3204,
+          "accuracy": 0.9747191011235955,
+          "precision": 0.8497409326424871,
+          "recall": 0.9344729344729344,
+          "f1": 0.8900949796472184,
+          "average": "positive=true",
+          "per_class": {
+            "false": {
+              "precision": 0.9918381831085876,
+              "recall": 0.979670522257273,
+              "f1": 0.9857168047963322,
+              "support": 2853,
+              "tp": 2795,
+              "fp": 23,
+              "fn": 58
+            },
+            "true": {
+              "precision": 0.8497409326424871,
+              "recall": 0.9344729344729344,
+              "f1": 0.8900949796472184,
+              "support": 351,
+              "tp": 328,
+              "fp": 58,
+              "fn": 23
+            }
+          },
+          "confusion_matrix": {
+            "false": {
+              "false": 2795,
+              "true": 58
+            },
+            "true": {
+              "false": 23,
+              "true": 328
+            }
+          },
+          "eligible": 3204,
+          "excluded_reference": {
+            "(해당 없음)": 32
+          },
+          "failed": 0,
+          "pending": 0,
+          "coverage": 1.0
+        },
+        "self_harm": {
+          "n": 3227,
+          "accuracy": 0.9662224976758599,
+          "precision": 0.5428571428571428,
+          "recall": 0.8976377952755905,
+          "f1": 0.6765578635014837,
+          "average": "positive=true",
+          "per_class": {
+            "false": {
+              "precision": 0.9956910838581372,
+              "recall": 0.9690322580645161,
+              "f1": 0.9821808075854177,
+              "support": 3100,
+              "tp": 3004,
+              "fp": 13,
+              "fn": 96
+            },
+            "true": {
+              "precision": 0.5428571428571428,
+              "recall": 0.8976377952755905,
+              "f1": 0.6765578635014837,
+              "support": 127,
+              "tp": 114,
+              "fp": 96,
+              "fn": 13
+            }
+          },
+          "confusion_matrix": {
+            "false": {
+              "false": 3004,
+              "true": 96
+            },
+            "true": {
+              "false": 13,
+              "true": 114
+            }
+          },
+          "eligible": 3227,
+          "excluded_reference": {
+            "(해당 없음)": 9
+          },
+          "failed": 0,
+          "pending": 0,
+          "coverage": 1.0
+        }
+      },
+      "rounds": [
+        {
+          "input_count": 3236,
+          "success": 3236,
+          "failed": 0,
+          "targets": {
+            "stage": {
+              "n": 3236,
+              "eligible": 3236,
+              "excluded_reference": {},
+              "failed": 0
+            },
+            "suicide": {
+              "n": 3204,
+              "eligible": 3204,
+              "excluded_reference": {
+                "(해당 없음)": 32
+              },
+              "failed": 0
+            },
+            "self_harm": {
+              "n": 3227,
+              "eligible": 3227,
+              "excluded_reference": {
+                "(해당 없음)": 9
+              },
+              "failed": 0
+            }
+          },
+          "median_seconds": 2.6012374580313917,
+          "p95_seconds": 5.298133750038687
+        }
+      ]
+    },
+    "terra": {
+      "name": "GPT-5.6 Terra",
+      "display_aggregation": "1회차",
+      "targets": {
+        "stage": {
+          "n": 3236,
+          "accuracy": 0.5293572311495673,
+          "precision": 0.5622306380561533,
+          "recall": 0.5285223160252847,
+          "f1": 0.49843715574694264,
+          "average": "macro",
+          "per_class": {
+            "정상군": {
+              "precision": 0.7033112582781457,
+              "recall": 0.7984962406015037,
+              "f1": 0.747887323943662,
+              "support": 665,
+              "tp": 531,
+              "fp": 224,
+              "fn": 134
+            },
+            "관찰필요": {
+              "precision": 0.5345454545454545,
+              "recall": 0.23186119873817035,
+              "f1": 0.3234323432343234,
+              "support": 634,
+              "tp": 147,
+              "fp": 128,
+              "fn": 487
+            },
+            "상담필요": {
+              "precision": 0.43902439024390244,
+              "recall": 0.463768115942029,
+              "f1": 0.4510571652310102,
+              "support": 621,
+              "tp": 288,
+              "fp": 368,
+              "fn": 333
+            },
+            "학대의심": {
+              "precision": 0.44015444015444016,
+              "recall": 0.8850931677018633,
+              "f1": 0.5879319236719959,
+              "support": 644,
+              "tp": 570,
+              "fp": 725,
+              "fn": 74
+            },
+            "응급": {
+              "precision": 0.6941176470588235,
+              "recall": 0.26339285714285715,
+              "f1": 0.3818770226537217,
+              "support": 672,
+              "tp": 177,
+              "fp": 78,
+              "fn": 495
+            }
+          },
+          "confusion_matrix": {
+            "정상군": {
+              "정상군": 531,
+              "관찰필요": 81,
+              "상담필요": 30,
+              "학대의심": 22,
+              "응급": 1
+            },
+            "관찰필요": {
+              "정상군": 202,
+              "관찰필요": 147,
+              "상담필요": 227,
+              "학대의심": 54,
+              "응급": 4
+            },
+            "상담필요": {
+              "정상군": 22,
+              "관찰필요": 44,
+              "상담필요": 288,
+              "학대의심": 256,
+              "응급": 11
+            },
+            "학대의심": {
+              "정상군": 0,
+              "관찰필요": 1,
+              "상담필요": 11,
+              "학대의심": 570,
+              "응급": 62
+            },
+            "응급": {
+              "정상군": 0,
+              "관찰필요": 2,
+              "상담필요": 100,
+              "학대의심": 393,
+              "응급": 177
+            }
+          },
+          "eligible": 3236,
+          "excluded_reference": {},
+          "failed": 0,
+          "pending": 0,
+          "coverage": 1.0
+        },
+        "suicide": {
+          "n": 3204,
+          "accuracy": 0.9775280898876404,
+          "precision": 0.8680738786279684,
+          "recall": 0.9373219373219374,
+          "f1": 0.9013698630136986,
+          "average": "positive=true",
+          "per_class": {
+            "false": {
+              "precision": 0.992212389380531,
+              "recall": 0.9824745881528216,
+              "f1": 0.9873194786896795,
+              "support": 2853,
+              "tp": 2803,
+              "fp": 22,
+              "fn": 50
+            },
+            "true": {
+              "precision": 0.8680738786279684,
+              "recall": 0.9373219373219374,
+              "f1": 0.9013698630136986,
+              "support": 351,
+              "tp": 329,
+              "fp": 50,
+              "fn": 22
+            }
+          },
+          "confusion_matrix": {
+            "false": {
+              "false": 2803,
+              "true": 50
+            },
+            "true": {
+              "false": 22,
+              "true": 329
+            }
+          },
+          "eligible": 3204,
+          "excluded_reference": {
+            "(해당 없음)": 32
+          },
+          "failed": 0,
+          "pending": 0,
+          "coverage": 1.0
+        },
+        "self_harm": {
+          "n": 3227,
+          "accuracy": 0.9801673380849086,
+          "precision": 0.7006369426751592,
+          "recall": 0.8661417322834646,
+          "f1": 0.7746478873239436,
+          "average": "positive=true",
+          "per_class": {
+            "false": {
+              "precision": 0.9944625407166123,
+              "recall": 0.9848387096774194,
+              "f1": 0.9896272285251215,
+              "support": 3100,
+              "tp": 3053,
+              "fp": 17,
+              "fn": 47
+            },
+            "true": {
+              "precision": 0.7006369426751592,
+              "recall": 0.8661417322834646,
+              "f1": 0.7746478873239436,
+              "support": 127,
+              "tp": 110,
+              "fp": 47,
+              "fn": 17
+            }
+          },
+          "confusion_matrix": {
+            "false": {
+              "false": 3053,
+              "true": 47
+            },
+            "true": {
+              "false": 17,
+              "true": 110
+            }
+          },
+          "eligible": 3227,
+          "excluded_reference": {
+            "(해당 없음)": 9
+          },
+          "failed": 0,
+          "pending": 0,
+          "coverage": 1.0
+        }
+      },
+      "rounds": [
+        {
+          "input_count": 3236,
+          "success": 3236,
+          "failed": 0,
+          "targets": {
+            "stage": {
+              "n": 3236,
+              "eligible": 3236,
+              "excluded_reference": {},
+              "failed": 0
+            },
+            "suicide": {
+              "n": 3204,
+              "eligible": 3204,
+              "excluded_reference": {
+                "(해당 없음)": 32
+              },
+              "failed": 0
+            },
+            "self_harm": {
+              "n": 3227,
+              "eligible": 3227,
+              "excluded_reference": {
+                "(해당 없음)": 9
+              },
+              "failed": 0
+            }
+          },
+          "median_seconds": 1.5726382915163413,
+          "p95_seconds": 2.845001916983165
+        }
+      ]
+    }
+  }
+}
