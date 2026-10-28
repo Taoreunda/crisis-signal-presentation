@@ -79,7 +79,7 @@ h1{font-size:66px;font-weight:660;letter-spacing:-.035em}
 .judgment-column{position:absolute;top:0}.judgment-column h2{font-size:30px;line-height:1.3;font-weight:540;color:#c2b4bf;margin-bottom:34px;letter-spacing:-.02em}
 .utterance-column{left:0;width:530px}.criterion-column{left:630px;width:350px}.json-column{left:1080px;width:600px}
 .utterance-surface,.criterion-surface,.json-surface{height:350px;border-radius:12px;background:#211d25;position:relative}
-.utterance-surface{padding:45px 38px}.utterance-surface p{font-size:43px;line-height:1.6;font-weight:520;word-break:keep-all;letter-spacing:-.025em}
+.utterance-surface{padding:34px 32px}.utterance-surface p{font-size:42px;line-height:1.45;font-weight:520;word-break:keep-all;letter-spacing:-.025em}
 .quote-cursor{display:inline-block;width:3px;height:40px;background:#ff6478;vertical-align:-5px;margin-left:4px}
 .criterion-surface{padding:50px 22px;background:#2c1e28;border:1px solid #704053;text-align:center}.criterion-surface p{font-size:33px;line-height:1.65;font-weight:550;letter-spacing:-.025em}
 .criterion-score{display:block;margin-top:24px;color:#ff849a;font-size:62px;line-height:1.2;font-weight:630;font-variant-numeric:tabular-nums;letter-spacing:-.035em}
@@ -176,7 +176,7 @@ h1{font-size:66px;font-weight:660;letter-spacing:-.035em}
 .cm-rate{display:block;font-size:80px;line-height:1.1;font-weight:650;letter-spacing:-.035em}
 .cm-count{display:block;font-size:40px;line-height:1.2;font-weight:400;margin-top:16px;color:#e0ccd4}
 </style></head><body>
-<div id="deck-clock" data-composition-id="root" data-start="0" data-duration="110" data-width="1920" data-height="1080" style="position:absolute;inset:0;pointer-events:none" aria-hidden="true"></div>
+<div id="deck-clock" data-composition-id="root" data-start="0" data-duration="120" data-width="1920" data-height="1080" style="position:absolute;inset:0;pointer-events:none" aria-hidden="true"></div>
 <script type="application/hyperframes-slideshow+json">
 {
   "slides": [
@@ -189,8 +189,12 @@ h1{font-size:66px;font-weight:660;letter-spacing:-.035em}
       "notes": "이 장은 System One 접근을 소개하며 모델 예시로 Nimble과 Jev를 표시합니다. 비교하는 추론형 LLM 예시는 GPT와 Qwen이며, 추론 모드를 사용하는 경우의 개념도입니다. GPT·Qwen 계열의 모든 모델과 실행 모드가 추론문을 생성한다는 뜻은 아닙니다. 아래의 구체적 구현·수치는 Nimble에 관한 설명이며 Jev의 측정값으로 일반화하지 않습니다.\n\nNimble은 입력과 판단 기준을 읽고 정해진 선택지의 점수를 직접 계산해 판단과 후보별 확률을 반환하는 공개 로컬 모델입니다. Qwen3.5-9B를 판단 작업에 맞춰 학습한 모델이며, Jev의 System One 접근에서 영감을 받았지만 Jev 가중치나 증류 모델은 아닙니다.\n\n화면은 추론 모드를 사용하는 생성형 LLM과 Nimble의 후보 점수 계산 방식을 비교합니다. 위쪽은 입력을 처리한 뒤 추론문 토큰과 최종 답변 토큰을 순차 생성합니다. 아래쪽은 긴 추론문과 답변 문자열 생성을 생략하고 허용된 선택지의 점수를 계산합니다. 입력을 처리하는 신경망 연산 자체는 두 방식에 모두 있습니다. '추론이 전혀 없다'고 설명하지 않습니다. Qwen을 비롯한 일반 LLM도 비추론 모드나 후보 점수 계산 방식으로 실행할 수 있으므로 모든 LLM보다 빠르다는 비교가 아닙니다.\n\n두 흐름은 함께 시작하고, Nimble의 예시 결과가 먼저 나타나는 동안 위쪽 토큰 생성은 계속됩니다. 애니메이션은 8.6초 후 정지하며 실제 실행 시간이나 속도 배수를 재현하지 않습니다. 화면에는 true와 94%만 표시합니다. 이는 설명용 가상 선택지 확률입니다. 모델의 정답률이나 자해·자살 발생 확률이 아닙니다. 반환 형식은 프로그램이 구성합니다.\n\n공식 속도 관측값은 H100의 단일 질문 120개에서 중앙값 106ms, M5 Pro 64GB의 324개에서 중앙값 444ms입니다. 조건이 다른 결과이며 이 프로젝트의 측정값이 아닙니다. 입력 처리와 9B 메모리 부담은 남습니다.\n\n판단 성능 근거는 노트에만 둡니다. 초기 공개 모델의 합성 판단 문항 324개에서 Nimble 292/324=90.12%, 기반 Qwen3.5-9B 215/324=66.36%, Jev 302/324=93.21%였습니다. 사람 검토가 없는 합성 기준 라벨이며 6개 소스 계열의 좁은 평가입니다. 별도 공개 사람 라벨 평가 13개 부분집합·3,880개 기록에서도 과제별 성능이 다릅니다. 예를 들어 BoolQ 86.0%, Aegis2 81.2%, Civil Comments 70.3%로, 한국어 위기 감지 성능을 뜻하지 않습니다. 이번 소개 화면은 이러한 정확도 숫자를 전면에 제시하지 않습니다.\n\n출처: https://github.com/bespokelabsai/nimble#capabilities · https://github.com/bespokelabsai/nimble#observed-inference-latency · https://github.com/bespokelabsai/nimble/blob/main/docs/PUBLIC_BENCHMARKS.md\n\n추론형 LLM의 답변은 “죽고 싶다는 생각이 반복된다는 표현이 있어, 자살 사고와 관련된 위험 신호가 포착됩니다.”라는 설명용 문장을 순차 표시합니다. 실제 호출 결과가 아닙니다. 결과 영역의 답변 생성·생성 완료·바로 반환·판단과 확률 설명 문구는 제거하고 발표자가 구두로 설명합니다."
     },
     {
-      "sceneId": "nimble",
-      "notes": "이 장의 제목과 도식 모델 명칭은 System One 모델로 표시합니다. Nimble을 예로 든 판단 흐름이며 JSON 키와 형식은 실행 API·프로젝트 구현에 따라 다릅니다.\n\n참여자의 입력 문장 → 위기 판단 기준 → JSON 결과를 같은 높이의 세 영역으로 보여줍니다. 문장이 입력된 뒤 위험 신호 선택지 점수가 0%에서 94%까지 한 번 올라가고, 동일한 값을 risk: 0.94로 표시한 결과 JSON이 한 번에 나타납니다. 가운데의 true/false 표시는 생략하고 점수로 통일합니다. 4.6초에 멈추고 다시 이 장에 들어오면 한 번 새로 재생합니다.\n\n표시한 JSON은 이 프로젝트 출력에서 핵심 필드 risk만 남긴 설명용 예시입니다. 실제 nimble.py CLI 출력 형식은 변경하지 않았습니다. model은 사용한 Ollama 모델 태그, risk는 모델의 위기 선택지 점수, crisis는 risk >= 0.5를 코드로 적용한 결과입니다. 0.94는 설명용 가상 값이며 실제 호출 결과나 임상적 발생 확률이 아닙니다.\n\n현재 연동 API의 원본은 /v1/systemone 응답 안의 answers.crisis.noul 점수입니다. 프로젝트는 그 점수를 읽어 {model, risk, crisis} 형태로 JSON을 구성합니다. Nimble이 JSON 문자열을 토큰별로 생성하는 방식은 아닙니다. 공식 Python scorer도 후보 점수를 계산한 뒤 코드가 output 및 fields 구조를 구성하므로, 세부 반환 키는 실행 API에 따라 다릅니다.\n\n출처: 프로젝트 nimble.py의 score 및 main, https://github.com/bespokelabsai/nimble#capabilities"
+      "sceneId": "nimble_suicide",
+      "notes": "사용자가 요청한 실제 비교 자료의 짧은 발췌 예시입니다. 입력: 네. 너무 힘들 때 죽고 싶은 생각이 들어요.\n\n원본 자살·자해 라벨 중 자살 있음인 사례이며 Nimble 9B의 공통 2회차 저장 응답도 있음으로 판단했습니다. 입력한 자료는 전체 상담이며 화면에는 읽기 쉬운 짧은 발화만 인용했습니다. 이 발췌 문장만 별도로 추론한 결과가 아닙니다.\n\n원 응답 answers.suicide.probabilities.true = 0.8144451403228796. 화면은 81.4%, JSON 요약은 0.8144로 반올림했습니다. score는 있음 선택지 점수이며 임상적 발생 확률이나 정답률이 아닙니다. JSON은 원 응답을 발표에 맞게 요약한 구조입니다.\n\n출처: AI Hub 아동·청소년 상담데이터 및 2026-10-23_all_models_three_runs_095532_881938의 round_02/remote/nimble_9b 저장 결과. 원 상담·건별 응답과 사례 대조 기록은 내부 outputs/에 보존합니다. 이름·학교·연락처 같은 식별 정보와 나머지 상담 내용은 표시하지 않습니다. 새 모델 호출·라벨링·학습은 수행하지 않았습니다.\n\n두 판단 예시는 같은 디자인과 공통 애니메이션 함수를 사용하며 4.6초에 정지합니다."
+    },
+    {
+      "sceneId": "nimble_self_harm",
+      "notes": "사용자가 요청한 실제 비교 자료의 짧은 발췌 예시입니다. 입력: 죽고 싶다는 생각은 안 하지만 스스로를 다치게 하는 생각을 해요.\n\n원본 자살·자해 라벨 중 자해 있음인 사례이며 Nimble 9B의 공통 2회차 저장 응답도 있음으로 판단했습니다. 입력한 자료는 전체 상담이며 화면에는 읽기 쉬운 짧은 발화만 인용했습니다. 이 발췌 문장만 별도로 추론한 결과가 아닙니다.\n\n원 응답 answers.self_harm.probabilities.true = 0.9935735994878321. 화면은 99.4%, JSON 요약은 0.9936로 반올림했습니다. score는 있음 선택지 점수이며 임상적 발생 확률이나 정답률이 아닙니다. JSON은 원 응답을 발표에 맞게 요약한 구조입니다.\n\n출처: AI Hub 아동·청소년 상담데이터 및 2026-10-23_all_models_three_runs_095532_881938의 round_02/remote/nimble_9b 저장 결과. 원 상담·건별 응답과 사례 대조 기록은 내부 outputs/에 보존합니다. 이름·학교·연락처 같은 식별 정보와 나머지 상담 내용은 표시하지 않습니다. 새 모델 호출·라벨링·학습은 수행하지 않았습니다.\n\n두 판단 예시는 같은 디자인과 공통 애니메이션 함수를 사용하며 4.6초에 정지합니다."
     },
     {
       "sceneId": "data",
@@ -277,25 +281,39 @@ h1{font-size:66px;font-weight:660;letter-spacing:-.035em}
 </div>
 <p class="footnote">구조 설명용 시연 · 시간 비율과 확률은 예시 · 출처: Bespoke Labs</p>
 </section>
-<section id="nimble" class="scene clip" data-composition-id="nimble" data-start="20" data-duration="10" data-track-index="2" data-width="1920" data-height="1080" data-label="System One 모델의 판단 과정">
-<header><h1>System One 모델의 판단 과정</h1></header>
-<div class="judgment-flow" role="group" aria-label="입력 문장을 기준에 따라 판단하고 프로젝트가 JSON으로 반환하는 과정">
-<svg class="judgment-links" viewBox="0 0 1680 540" aria-hidden="true"><path id="nimble-in" class="route" d="M530 250 H624"/><path id="nimble-out" class="route" d="M980 250 H1074"/><path d="M612 242 L622 250 L612 258 M1062 242 L1072 250 L1062 258" fill="none" stroke="#9e7089" stroke-width="2"/><circle id="nimble-dot" cx="530" cy="250" r="6" fill="#ff6478"/></svg>
-<div class="judgment-column utterance-column"><h2>입력 문장</h2><div class="utterance-surface"><p aria-label="요즘 죽고 싶다는 생각이 계속 들어요."><span id="typed-quote"></span><span class="quote-cursor" aria-hidden="true"></span></p></div></div>
-<div class="judgment-column criterion-column"><h2>System One 모델</h2><div class="criterion-surface"><p>자해·자살·타해<br>신호가 있는가?</p><strong id="criterion-score" class="criterion-score" aria-label="설명용 위험 신호 점수 94퍼센트">94%</strong><div class="criterion-progress" aria-hidden="true"><i id="criterion-progress"></i></div></div></div>
-<div class="judgment-column json-column"><h2>JSON</h2><div class="json-surface"><pre id="result" aria-label="설명용 JSON 결과. risk 0.94"><code>{
-  <span class="json-key">"risk"</span>: <span class="json-value">0.94</span>
+<section id="nimble_suicide" class="scene clip judgment-scene" data-composition-id="nimble_suicide" data-start="20" data-duration="10" data-track-index="2" data-width="1920" data-height="1080" data-label="System One 모델의 판단 과정 · 자살" data-score="0.8144451403228796">
+<header><h1>System One 모델의 판단 과정 · 자살</h1></header>
+<div class="judgment-flow" role="group" aria-label="상담 발췌 문장과 전체 상담에 대한 자살 판단 결과">
+<svg class="judgment-links" viewBox="0 0 1680 540" aria-hidden="true"><path id="nimble_suicide-in" class="route" d="M530 250 H624"/><path id="nimble_suicide-out" class="route" d="M980 250 H1074"/><path d="M612 242 L622 250 L612 258 M1062 242 L1072 250 L1062 258" fill="none" stroke="#9e7089" stroke-width="2"/><circle id="nimble_suicide-dot" cx="530" cy="250" r="6" fill="#ff6478"/></svg>
+<div class="judgment-column utterance-column"><h2>입력 문장</h2><div class="utterance-surface"><p aria-label="네. 너무 힘들 때 죽고 싶은 생각이 들어요."><span class="typed-quote"></span><span class="quote-cursor" aria-hidden="true"></span></p></div></div>
+<div class="judgment-column criterion-column"><h2>System One 모델</h2><div class="criterion-surface"><p>자살 위험이<br>있는가?</p><strong class="criterion-score" aria-label="있음 선택지 점수 81.4퍼센트">81.4%</strong><div class="criterion-progress" aria-hidden="true"><i></i></div></div></div>
+<div class="judgment-column json-column"><h2>JSON</h2><div class="json-surface"><pre class="judgment-result" aria-label="자살 있음, 점수 0.8144"><code>{
+  <span class="json-key">"suicide"</span>: <span class="json-value">true</span>,
+  <span class="json-key">"score"</span>: <span class="json-value">0.8144</span>
 }</code></pre></div></div>
 </div>
-<p class="footnote">핵심 필드만 표시한 JSON 예시 · 점수는 설명용 예시 · 실제 모델 실행 결과 아님</p>
+<p class="footnote">입력은 상담 일부 발췌 · 점수는 전체 상담에 대한 Nimble 실행 결과 · JSON은 표시용 요약</p>
 </section>
-<section id="data" class="scene clip" data-composition-id="data" data-start="30" data-duration="10" data-track-index="3" data-width="1920" data-height="1080" data-label="상담 데이터">
+<section id="nimble_self_harm" class="scene clip judgment-scene" data-composition-id="nimble_self_harm" data-start="30" data-duration="10" data-track-index="3" data-width="1920" data-height="1080" data-label="System One 모델의 판단 과정 · 자해" data-score="0.9935735994878321">
+<header><h1>System One 모델의 판단 과정 · 자해</h1></header>
+<div class="judgment-flow" role="group" aria-label="상담 발췌 문장과 전체 상담에 대한 자해 판단 결과">
+<svg class="judgment-links" viewBox="0 0 1680 540" aria-hidden="true"><path id="nimble_self_harm-in" class="route" d="M530 250 H624"/><path id="nimble_self_harm-out" class="route" d="M980 250 H1074"/><path d="M612 242 L622 250 L612 258 M1062 242 L1072 250 L1062 258" fill="none" stroke="#9e7089" stroke-width="2"/><circle id="nimble_self_harm-dot" cx="530" cy="250" r="6" fill="#ff6478"/></svg>
+<div class="judgment-column utterance-column"><h2>입력 문장</h2><div class="utterance-surface"><p aria-label="죽고 싶다는 생각은 안 하지만 스스로를 다치게 하는 생각을 해요."><span class="typed-quote"></span><span class="quote-cursor" aria-hidden="true"></span></p></div></div>
+<div class="judgment-column criterion-column"><h2>System One 모델</h2><div class="criterion-surface"><p>자해 위험이<br>있는가?</p><strong class="criterion-score" aria-label="있음 선택지 점수 99.4퍼센트">99.4%</strong><div class="criterion-progress" aria-hidden="true"><i></i></div></div></div>
+<div class="judgment-column json-column"><h2>JSON</h2><div class="json-surface"><pre class="judgment-result" aria-label="자해 있음, 점수 0.9936"><code>{
+  <span class="json-key">"self_harm"</span>: <span class="json-value">true</span>,
+  <span class="json-key">"score"</span>: <span class="json-value">0.9936</span>
+}</code></pre></div></div>
+</div>
+<p class="footnote">입력은 상담 일부 발췌 · 점수는 전체 상담에 대한 Nimble 실행 결과 · JSON은 표시용 요약</p>
+</section>
+<section id="data" class="scene clip" data-composition-id="data" data-start="40" data-duration="10" data-track-index="4" data-width="1920" data-height="1080" data-label="상담 데이터">
 <header><h1>상담 데이터</h1></header>
 <figure class="capture"><div class="capture-window"><img src="assets/aihub-child-counseling.png" alt="AI Hub 아동·청소년 상담데이터 공식 페이지 캡처" data-layout-allow-overflow></div><figcaption><a href="https://aihub.or.kr/aihubdata/data/view.do?dataSetSn=71680" target="_blank" rel="noopener">AI Hub · 아동·청소년 상담데이터 ↗</a></figcaption></figure>
 <div class="stats"><div><p class="stat-label">공식 전체 상담 자료</p><div class="stat-value" aria-label="3,596건"><strong id="record-count" aria-hidden="true">0</strong><span>건</span></div></div></div>
 
 </section>
-<section id="finetuning" class="scene clip" data-composition-id="finetuning" data-start="40" data-duration="10" data-track-index="4" data-width="1920" data-height="1080" data-label="모델 성능 확인 및 LoRA 파인튜닝">
+<section id="finetuning" class="scene clip" data-composition-id="finetuning" data-start="50" data-duration="10" data-track-index="5" data-width="1920" data-height="1080" data-label="모델 성능 확인 및 LoRA 파인튜닝">
 <header><h1>모델 성능 확인 및 LoRA 파인튜닝</h1></header>
 <div class="training-flow" role="group" aria-label="아동·청소년 공개 자료로 모델 성능을 평가·비교하고 성능이 부족하면 LoRA 파인튜닝을 실시합니다. 원자료에서 증강한 성인 데이터는 평가를 거치지 않고 LoRA 학습에 직접 연결합니다."><svg class="training-links" viewBox="0 0 1680 660" aria-hidden="true"><defs><marker id="training-arrow" markerWidth="9" markerHeight="9" refX="8" refY="4" orient="auto" markerUnits="userSpaceOnUse"><path d="M1 0 L8 4 L1 8" fill="none" stroke="#b78498" stroke-width="1.5"/></marker></defs><g fill="none" stroke="#634654" stroke-width="2" marker-end="url(#training-arrow)"><path d="M360 210 H522"/><path d="M1130 210 H1312"/><path d="M180 300 V462"/><path d="M420 545 H1475 Q1500 545 1500 520 V388"/></g><path id="training-original-flow" class="training-signal" pathLength="1" d="M360 210 H522"/><path id="training-result-flow" class="training-signal" pathLength="1" d="M1130 210 H1312"/><path id="training-augment-flow" class="training-signal" pathLength="1" d="M180 300 V462"/><path id="training-adult-flow" class="training-signal" pathLength="1" d="M420 545 H1475 Q1500 545 1500 520 V388"/></svg>
 <div id="training-source-card" class="training-card training-source"><h2>아동·청소년<br>공개 자료</h2></div>
@@ -307,7 +325,7 @@ h1{font-size:66px;font-weight:660;letter-spacing:-.035em}
 <div class="training-card training-model"><h2>Nimble</h2><p class="training-caption">LoRA 파인튜닝</p><div class="lora-matrices" role="img" aria-label="LoRA의 작은 두 가중치 행렬을 업데이트하는 개념 애니메이션"><div class="lora-grid lora-grid-tall"><span class="lora-cell"></span><span class="lora-cell"></span><span class="lora-cell"></span><span class="lora-cell"></span><span class="lora-cell"></span><span class="lora-cell"></span><span class="lora-cell"></span><span class="lora-cell"></span><span class="lora-cell"></span><span class="lora-cell"></span></div><div class="lora-coupling" aria-hidden="true"></div><div class="lora-grid lora-grid-wide"><span class="lora-cell"></span><span class="lora-cell"></span><span class="lora-cell"></span><span class="lora-cell"></span><span class="lora-cell"></span><span class="lora-cell"></span><span class="lora-cell"></span><span class="lora-cell"></span><span class="lora-cell"></span><span class="lora-cell"></span></div></div><div class="lora-training-progress" aria-hidden="true"><i id="lora-learning-progress"></i></div></div>
 </div>
 </section>
-<section id="results_scope" class="scene clip results-scene" data-composition-id="results_scope" data-start="50" data-duration="10" data-track-index="5" data-width="1920" data-height="1080" data-label="비교 모델과 실행 조건">
+<section id="results_scope" class="scene clip results-scene" data-composition-id="results_scope" data-start="60" data-duration="10" data-track-index="6" data-width="1920" data-height="1080" data-label="비교 모델과 실행 조건">
 <header><h1>비교 모델과 실행 조건</h1></header>
 <div class="result-scope">
 <div class="scope-models"><h2>로컬 모델 · 10종</h2><ul>
@@ -324,7 +342,7 @@ h1{font-size:66px;font-weight:660;letter-spacing:-.035em}
 </div>
 </div>
 </section>
-<section id="results_data" class="scene clip results-scene" data-composition-id="results_data" data-start="60" data-duration="10" data-track-index="6" data-width="1920" data-height="1080" data-label="원본 라벨별 건수">
+<section id="results_data" class="scene clip results-scene" data-composition-id="results_data" data-start="70" data-duration="10" data-track-index="7" data-width="1920" data-height="1080" data-label="원본 라벨별 건수">
 <header><h1>원본 라벨별 건수</h1></header>
 <div class="evaluation-data">
 <div class="binary-counts-panel">
@@ -348,22 +366,22 @@ h1{font-size:66px;font-weight:660;letter-spacing:-.035em}
 <tr><th scope="row">응급</th><td>672</td></tr></tbody></table>
 </div>
 </section>
-<section id="results_suicide" class="scene clip results-scene" data-composition-id="results_suicide" data-start="70" data-duration="10" data-track-index="7" data-width="1920" data-height="1080" data-label="자살 판정 결과">
+<section id="results_suicide" class="scene clip results-scene" data-composition-id="results_suicide" data-start="80" data-duration="10" data-track-index="8" data-width="1920" data-height="1080" data-label="자살 판정 결과">
 <header><h1>자살 판정 결과</h1></header>
 <table class="result-table"><thead><tr><th scope="col">모델</th><th scope="col">정확도 (%)</th><th scope="col">정밀도 (%)</th><th scope="col">재현율 (%)</th><th scope="col">F1 (%)</th></tr></thead><tbody><tr data-model="qwen38_27b" class="result-best"><th scope="row">Qwen3.8 27B</th><td>98.13</td><td>90.08</td><td>93.16</td><td>91.60</td></tr><tr data-model="terra"><th scope="row">GPT-5.6 Terra<sup class="result-once">*</sup></th><td>97.75</td><td>86.81</td><td>93.73</td><td>90.14</td></tr><tr data-model="jev"><th scope="row">Jev 1.13.0</th><td>97.57</td><td>85.27</td><td>94.02</td><td>89.43</td></tr><tr data-model="luna"><th scope="row">GPT-5.6 Luna<sup class="result-once">*</sup></th><td>97.47</td><td>84.97</td><td>93.45</td><td>89.01</td></tr><tr data-model="qwen35_9b"><th scope="row">Qwen3.5 9B</th><td>97.53</td><td>87.78</td><td>90.03</td><td>88.89</td></tr><tr data-model="clef_27b"><th scope="row">Clef 27B</th><td>97.57</td><td>90.99</td><td>86.32</td><td>88.60</td></tr><tr data-model="nimble_9b"><th scope="row">Nimble 9B</th><td>96.47</td><td>87.50</td><td>79.11</td><td>83.09</td></tr><tr data-model="tev1_4b"><th scope="row">Tev1 4B</th><td>95.76</td><td>76.28</td><td>88.89</td><td>82.11</td></tr><tr data-model="pplx_decider_27b"><th scope="row">pplx-decider 27B</th><td>96.22</td><td>90.97</td><td>72.74</td><td>80.84</td></tr><tr data-model="clef_flash_9b"><th scope="row">Clef Flash 9B</th><td>96.04</td><td>90.00</td><td>71.79</td><td>79.87</td></tr><tr data-model="laya_322m"><th scope="row">Laya 322M</th><td>15.95</td><td>11.23</td><td>96.58</td><td>20.11</td></tr><tr data-model="laya_421m"><th scope="row">Laya 421M</th><td>10.89</td><td>10.81</td><td>100.00</td><td>19.51</td></tr><tr data-model="tev1_08b"><th scope="row">Tev1 0.8B</th><td>89.36</td><td>59.05</td><td>9.31</td><td>16.08</td></tr></tbody></table>
 <p class="result-note">* GPT 2종은 1회 결과, 나머지는 3회 평균</p>
 </section>
-<section id="results_self_harm" class="scene clip results-scene" data-composition-id="results_self_harm" data-start="80" data-duration="10" data-track-index="8" data-width="1920" data-height="1080" data-label="자해 판정 결과">
+<section id="results_self_harm" class="scene clip results-scene" data-composition-id="results_self_harm" data-start="90" data-duration="10" data-track-index="9" data-width="1920" data-height="1080" data-label="자해 판정 결과">
 <header><h1>자해 판정 결과</h1></header>
 <table class="result-table"><thead><tr><th scope="col">모델</th><th scope="col">정확도 (%)</th><th scope="col">정밀도 (%)</th><th scope="col">재현율 (%)</th><th scope="col">F1 (%)</th></tr></thead><tbody><tr data-model="clef_flash_9b" class="result-best"><th scope="row">Clef Flash 9B</th><td>98.54</td><td>81.75</td><td>81.10</td><td>81.42</td></tr><tr data-model="terra"><th scope="row">GPT-5.6 Terra<sup class="result-once">*</sup></th><td>98.02</td><td>70.06</td><td>86.61</td><td>77.46</td></tr><tr data-model="luna"><th scope="row">GPT-5.6 Luna<sup class="result-once">*</sup></th><td>96.62</td><td>54.29</td><td>89.76</td><td>67.66</td></tr><tr data-model="pplx_decider_27b"><th scope="row">pplx-decider 27B</th><td>94.62</td><td>41.53</td><td>90.03</td><td>56.84</td></tr><tr data-model="nimble_9b"><th scope="row">Nimble 9B</th><td>94.47</td><td>40.94</td><td>91.34</td><td>56.54</td></tr><tr data-model="qwen38_27b"><th scope="row">Qwen3.8 27B</th><td>93.34</td><td>36.59</td><td>94.49</td><td>52.75</td></tr><tr data-model="clef_27b"><th scope="row">Clef 27B</th><td>91.08</td><td>29.82</td><td>93.70</td><td>45.25</td></tr><tr data-model="jev"><th scope="row">Jev 1.13.0</th><td>89.93</td><td>27.60</td><td>96.06</td><td>42.88</td></tr><tr data-model="qwen35_9b"><th scope="row">Qwen3.5 9B</th><td>89.58</td><td>26.93</td><td>96.06</td><td>42.07</td></tr><tr data-model="tev1_4b"><th scope="row">Tev1 4B</th><td>88.78</td><td>24.51</td><td>88.98</td><td>38.44</td></tr><tr data-model="tev1_08b"><th scope="row">Tev1 0.8B</th><td>62.83</td><td>8.79</td><td>90.03</td><td>16.01</td></tr><tr data-model="laya_322m"><th scope="row">Laya 322M</th><td>4.37</td><td>3.95</td><td>100.00</td><td>7.60</td></tr><tr data-model="laya_421m"><th scope="row">Laya 421M</th><td>3.95</td><td>3.77</td><td>100.00</td><td>7.26</td></tr></tbody></table>
 <p class="result-note">* GPT 2종은 1회 결과, 나머지는 3회 평균</p>
 </section>
-<section id="results_stage" class="scene clip results-scene" data-composition-id="results_stage" data-start="90" data-duration="10" data-track-index="9" data-width="1920" data-height="1080" data-label="종합 위기 5단계 판정 결과">
+<section id="results_stage" class="scene clip results-scene" data-composition-id="results_stage" data-start="100" data-duration="10" data-track-index="10" data-width="1920" data-height="1080" data-label="종합 위기 5단계 판정 결과">
 <header><h1>종합 위기 5단계 판정 결과</h1></header>
 <table class="result-table"><thead><tr><th scope="col">모델</th><th scope="col">정확도 (%)</th><th scope="col">정밀도 (%)<span class="metric-average">macro</span></th><th scope="col">재현율 (%)<span class="metric-average">macro</span></th><th scope="col">Macro F1 (%)</th></tr></thead><tbody><tr data-model="terra" class="result-best"><th scope="row">GPT-5.6 Terra<sup class="result-once">*</sup></th><td>52.94</td><td>56.22</td><td>52.85</td><td>49.84</td></tr><tr data-model="luna"><th scope="row">GPT-5.6 Luna<sup class="result-once">*</sup></th><td>52.97</td><td>55.65</td><td>52.76</td><td>49.13</td></tr><tr data-model="clef_27b"><th scope="row">Clef 27B</th><td>53.99</td><td>59.64</td><td>54.04</td><td>48.02</td></tr><tr data-model="jev"><th scope="row">Jev 1.13.0</th><td>53.06</td><td>60.28</td><td>53.05</td><td>46.13</td></tr><tr data-model="nimble_9b"><th scope="row">Nimble 9B</th><td>51.05</td><td>57.72</td><td>51.33</td><td>44.97</td></tr><tr data-model="pplx_decider_27b"><th scope="row">pplx-decider 27B</th><td>48.69</td><td>57.61</td><td>48.68</td><td>41.36</td></tr><tr data-model="clef_flash_9b"><th scope="row">Clef Flash 9B</th><td>48.89</td><td>57.86</td><td>48.98</td><td>40.12</td></tr><tr data-model="qwen38_27b"><th scope="row">Qwen3.8 27B</th><td>51.20</td><td>61.16</td><td>51.23</td><td>40.11</td></tr><tr data-model="tev1_4b"><th scope="row">Tev1 4B</th><td>44.19</td><td>58.07</td><td>44.45</td><td>35.13</td></tr><tr data-model="qwen35_9b"><th scope="row">Qwen3.5 9B</th><td>42.81</td><td>64.93</td><td>43.01</td><td>32.90</td></tr><tr data-model="laya_322m"><th scope="row">Laya 322M</th><td>21.26</td><td>48.48</td><td>20.77</td><td>10.96</td></tr><tr data-model="tev1_08b"><th scope="row">Tev1 0.8B</th><td>20.34</td><td>24.68</td><td>21.12</td><td>8.83</td></tr><tr data-model="laya_421m"><th scope="row">Laya 421M</th><td>18.69</td><td>8.98</td><td>19.40</td><td>6.97</td></tr></tbody></table>
 <p class="result-note">* GPT 2종은 1회 결과, 나머지는 3회 평균</p>
 </section>
-<section id="results_confusion" class="scene clip results-scene" data-composition-id="results_confusion" data-start="100" data-duration="10" data-track-index="10" data-width="1920" data-height="1080" data-label="로컬 상위 모델의 혼동행렬">
+<section id="results_confusion" class="scene clip results-scene" data-composition-id="results_confusion" data-start="110" data-duration="10" data-track-index="11" data-width="1920" data-height="1080" data-label="로컬 상위 모델의 혼동행렬">
 <header><h1>로컬 상위 모델의 혼동행렬</h1></header>
 <div class="confusion-panels"><div class="confusion-panel"><h2 id="cm-title-0">자살 · Qwen3.8 27B</h2><table class="confusion-table" aria-labelledby="cm-title-0"><colgroup><col><col><col><col></colgroup><thead><tr><td colspan="2"></td><th class="cm-axis" colspan="2" scope="colgroup">라벨링</th></tr><tr><td colspan="2"></td><th scope="col">있음</th><th scope="col">없음</th></tr></thead><tbody><tr><th class="cm-axis cm-prediction-axis" scope="rowgroup" rowspan="2"><span>예측</span></th><th scope="row">있음</th><td class="cm-cell" style="--cm-fill:93.1624%"><span class="cm-rate">93.2%</span><span class="cm-count">327건</span></td><td class="cm-cell" style="--cm-fill:1.2618%"><span class="cm-rate">1.3%</span><span class="cm-count">36건</span></td></tr><tr><th scope="row">없음</th><td class="cm-miss" style="--cm-fill:6.8376%"><span class="cm-rate">6.8%</span><span class="cm-count">24건</span></td><td class="cm-cell" style="--cm-fill:98.7382%"><span class="cm-rate">98.7%</span><span class="cm-count">2,817건</span></td></tr></tbody></table></div><div class="confusion-panel"><h2 id="cm-title-1">자해 · Clef Flash 9B</h2><table class="confusion-table" aria-labelledby="cm-title-1"><colgroup><col><col><col><col></colgroup><thead><tr><td colspan="2"></td><th class="cm-axis" colspan="2" scope="colgroup">라벨링</th></tr><tr><td colspan="2"></td><th scope="col">있음</th><th scope="col">없음</th></tr></thead><tbody><tr><th class="cm-axis cm-prediction-axis" scope="rowgroup" rowspan="2"><span>예측</span></th><th scope="row">있음</th><td class="cm-cell" style="--cm-fill:81.1024%"><span class="cm-rate">81.1%</span><span class="cm-count">103건</span></td><td class="cm-cell" style="--cm-fill:0.7419%"><span class="cm-rate">0.7%</span><span class="cm-count">23건</span></td></tr><tr><th scope="row">없음</th><td class="cm-miss" style="--cm-fill:18.8976%"><span class="cm-rate">18.9%</span><span class="cm-count">24건</span></td><td class="cm-cell" style="--cm-fill:99.2581%"><span class="cm-rate">99.3%</span><span class="cm-count">3,077건</span></td></tr></tbody></table></div></div>
 </section>
@@ -497,20 +515,21 @@ function data(t){
   el.style.transform=`scale(${1+.035*Math.sin(Math.PI*clamp((p-2.3)/.65))})`;
  }
 }
-const quote='요즘 죽고 싶다는 생각이 계속 들어요.';
-function nimble(t){
+function judgment(scene,t){
+ const find=selector=>scene.querySelector(selector);
+ const quote=find('.utterance-surface p').getAttribute('aria-label');
  const p=Math.max(0,t),count=Math.floor(clamp(p/2.1)*Array.from(quote).length);
- $('#typed-quote').textContent=Array.from(quote).slice(0,count).join('');
- opacity($('.quote-cursor'),p<2.2?(Math.floor(p*3)%2?1:.2):0);
+ find('.typed-quote').textContent=Array.from(quote).slice(0,count).join('');
+ opacity(find('.quote-cursor'),p<2.2?(Math.floor(p*3)%2?1:.2):0);
  const progress=(1-Math.cos(Math.PI*clamp((p-2.5)/1.1)))/2;
- $('#criterion-progress').style.transform=`scaleX(${progress})`;
- $('#criterion-score').textContent=`${Math.round(94*progress)}%`;
- opacity($('#criterion-score'),ease((p-2.4)/.15));
- const dot=$('#nimble-dot');
- if(p<2.6)move(dot,'nimble-in',clamp((p-2.1)/.5));
- else move(dot,'nimble-out',clamp((p-3.6)/.35));
+ find('.criterion-progress i').style.transform=`scaleX(${progress})`;
+ find('.criterion-score').textContent=`${(Number(scene.dataset.score)*100*progress).toFixed(1)}%`;
+ opacity(find('.criterion-score'),ease((p-2.4)/.15));
+ const dot=find('circle');
+ if(p<2.6)move(dot,`${scene.id}-in`,clamp((p-2.1)/.5));
+ else move(dot,`${scene.id}-out`,clamp((p-3.6)/.35));
  opacity(dot,p>=2.1&&p<2.6||p>=3.6&&p<3.95?1:0);
- opacity($('#result'),ease((p-3.95)/.35));
+ opacity(find('.judgment-result'),ease((p-3.95)/.35));
 }
 const loraCells=Array.from(document.querySelectorAll('.lora-cell'));
 function training(t){
@@ -536,22 +555,23 @@ function training(t){
  });
  $('#lora-learning-progress').style.transform=`scaleX(${learning})`;
 }
-const painters={necessity:need,nimble_intro:intro,nimble,data,finetuning:training};
+const painters={necessity:need,nimble_intro:intro,data,finetuning:training};
 for(const scene of scenes.filter(s=>s.el.classList.contains('results-scene')))painters[scene.id]=()=>{};
-const lengths={necessity:16.2,nimble_intro:8.6,nimble:4.6,data:3.2,finetuning:6.5};
+const lengths={necessity:16.2,nimble_intro:8.6,data:3.2,finetuning:6.5};
+for(const scene of document.querySelectorAll('.judgment-scene')){painters[scene.id]=t=>judgment(scene,t);lengths[scene.id]=4.6;}
 let activeId=null,liveClock=null,cycleCount=0;
 const motionQuery=matchMedia('(prefers-reduced-motion: reduce)');
 function isLive(){try{return Boolean(parent.document.querySelector('hyperframes-slideshow'))}catch{return false}}
 function stopClock(){liveClock?.kill();liveClock=null;}
 function staticScene(id){
- painters[id]({necessity:3,nimble_intro:9,nimble:7,data:7,finetuning:6.5}[id]??0);
+ painters[id]({necessity:3,nimble_intro:9,data:7,finetuning:6.5}[id]??lengths[id]??0);
  document.getElementById(id).querySelectorAll('svg>circle[id$="dot"]').forEach(el=>opacity(el,0));
 }
 function playScene(id){
  stopClock();
  if(motionQuery.matches||document.getElementById(id).classList.contains('results-scene')){staticScene(id);return}
  const clock={t:0};cycleCount=1;painters[id](0);
- liveClock=gsap.timeline({paused:document.hidden,data:'live-scene',onComplete:()=>{if(id==='nimble_intro'||id==='nimble'||id==='data'||id==='finetuning')return;cycleCount++;liveClock?.restart()}});
+ liveClock=gsap.timeline({paused:document.hidden,data:'live-scene',onComplete:()=>{if(id!=='necessity')return;cycleCount++;liveClock?.restart()}});
  liveClock.to(clock,{t:lengths[id],duration:lengths[id],ease:'none',onUpdate:()=>{
   if(motionQuery.matches){stopClock();staticScene(id)}else painters[id](clock.t);
  }},0);
@@ -566,7 +586,7 @@ function renderAt(t){
 }
 window.__timelines=window.__timelines||{};
 const master={t:0},root=gsap.timeline({paused:true});
-root.to(master,{t:110,duration:110,ease:'none',onUpdate:()=>renderAt(master.t)},0);
+root.to(master,{t:120,duration:120,ease:'none',onUpdate:()=>renderAt(master.t)},0);
 window.__timelines.root=root;
 for(const scene of scenes){
  const time={t:0},tl=gsap.timeline({paused:true});
@@ -578,7 +598,7 @@ window.__deckState=()=>({scene:activeId,time:liveClock?.time()??null,iteration:l
 document.addEventListener('visibilitychange',()=>liveClock?.paused(document.hidden));
 motionQuery.addEventListener('change',()=>{if(activeId&&isLive())playScene(activeId)});
 renderAt(0);
-window.addEventListener('load',()=>parent.postMessage({source:'hf-preview',type:'timeline',durationInFrames:3300,scenes:scenes.map(({id,start,duration})=>({id,start,duration}))},'*'));
+window.addEventListener('load',()=>parent.postMessage({source:'hf-preview',type:'timeline',durationInFrames:3600,scenes:scenes.map(({id,start,duration})=>({id,start,duration}))},'*'));
 
 </script>
 </body></html>
