@@ -3,12 +3,12 @@
 <head>
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1">
 <title>한국어 위기 신호 감지 모델 개발 — 발표</title>
-<meta name="description" content="대화 속 위기 신호 포착 모델 개발: System One 모델, 상담 데이터, 모델 성능 비교와 LoRA 파인튜닝 계획을 소개합니다.">
+<meta name="description" content="대화 속 위기 신호 포착 모델 개발: System One 모델, 상담 데이터, 모델 평가 계획와 LoRA 파인튜닝 계획을 소개합니다.">
 <link rel="canonical" href="https://taoreunda.github.io/crisis-signal-presentation/">
 <meta property="og:type" content="website">
 <meta property="og:locale" content="ko_KR">
 <meta property="og:title" content="대화 속 위기 신호 포착 모델 개발">
-<meta property="og:description" content="System One 모델 · 상담 데이터 · 모델 성능 비교 · LoRA 파인튜닝">
+<meta property="og:description" content="System One 모델 · 상담 데이터 · 모델 평가 계획 · LoRA 파인튜닝">
 <meta property="og:url" content="https://taoreunda.github.io/crisis-signal-presentation/">
 <meta property="og:image" content="https://taoreunda.github.io/crisis-signal-presentation/assets/share-preview.png">
 <meta property="og:image:type" content="image/png">
@@ -17,7 +17,7 @@
 <meta property="og:image:alt" content="대화 속 위기 신호 포착 모델 개발 — 면담 대화에서 로컬 모델이 위기 신호를 감지하는 도식">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="대화 속 위기 신호 포착 모델 개발">
-<meta name="twitter:description" content="System One 모델 · 상담 데이터 · 모델 성능 비교 · LoRA 파인튜닝">
+<meta name="twitter:description" content="System One 모델 · 상담 데이터 · 모델 평가 계획 · LoRA 파인튜닝">
 <meta name="twitter:image" content="https://taoreunda.github.io/crisis-signal-presentation/assets/share-preview.png">
 <meta name="twitter:image:alt" content="면담 대화에서 로컬 모델이 위기 신호를 감지하는 도식">
 <link rel="icon" href="data:,">
@@ -60,53 +60,33 @@ hyperframes-slideshow [data-hf-nav-cluster]{right:24px!important;bottom:26px!imp
 <code>python3 -m http.server 8766 --bind 127.0.0.1</code>
 </main>
 <hyperframes-slideshow tabindex="0">
-<hyperframes-player interactive src="slides.html?v=cca81b2a4170"></hyperframes-player>
+<hyperframes-player interactive src="slides.html?v=b7231d164b60"></hyperframes-player>
 <script type="application/hyperframes-slideshow+json">
 {
   "slides": [
     {
-      "sceneId": "necessity",
-      "notes": "면담 중 위기 신호를 놓치는 문제와 일상적인 표현을 위기로 오인해 면담을 중단하는 문제를 함께 줄이려는 개발입니다. 도식의 안전망이 위기 신호를 포착하고 면담의 흐름을 이어가도록 개발하려는 필요성을 설명합니다.\n\n도식은 특정 발화 사례가 아니라 개발 필요성을 설명하는 개념도입니다. 대화 속 위기 신호를 포착하는 안전망과 면담을 이어가는 흐름을 함께 보여줍니다. 현재 모델 성능을 검증했다는 뜻은 아닙니다.\n\n화면의 필요성 줄글은 생략합니다. 대화 말풍선은 내용을 추상적인 토큰 막대로 표시하며 지속적으로 들어오고 위로 이동합니다. 감지와 두 갈래의 신호 흐름을 반복하지만 개별 발화의 실제 판단 결과가 아닙니다. 화면을 떠나면 해당 화면의 재생을 중단하며 애니메이션 감소 설정에서는 정지 도식으로 표시합니다.\n\n목표는 한국어 자해·자살·타해 신호를 감지하는 로컬 모델을 개발하는 것입니다. 첫 적용 대상은 성인의 사회적 고립 면담 앱입니다. 개발 계획이며 성인 성능 검증을 완료했다는 뜻은 아닙니다.\n\n발표 화면에는 페이지 번호와 이동 버튼을 표시합니다. 구체적인 설명은 이 노트로 전달합니다."
+      "sceneId": "necessity"
     },
     {
-      "sceneId": "nimble_intro",
-      "notes": "이 장은 System One 접근을 소개하며 모델 예시로 Nimble과 Jev를 표시합니다. 비교하는 추론형 LLM 예시는 GPT와 Qwen이며, 추론 모드를 사용하는 경우의 개념도입니다. GPT·Qwen 계열의 모든 모델과 실행 모드가 추론문을 생성한다는 뜻은 아닙니다. 아래의 구체적 구현·수치는 Nimble에 관한 설명이며 Jev의 측정값으로 일반화하지 않습니다.\n\nNimble은 입력과 판단 기준을 읽고 정해진 선택지의 점수를 직접 계산해 판단과 후보별 확률을 반환하는 공개 로컬 모델입니다. Qwen3.5-9B를 판단 작업에 맞춰 학습한 모델이며, Jev의 System One 접근에서 영감을 받았지만 Jev 가중치나 증류 모델은 아닙니다.\n\n화면은 추론 모드를 사용하는 생성형 LLM과 Nimble의 후보 점수 계산 방식을 비교합니다. 위쪽은 입력을 처리한 뒤 추론문 토큰과 최종 답변 토큰을 순차 생성합니다. 아래쪽은 긴 추론문과 답변 문자열 생성을 생략하고 허용된 선택지의 점수를 계산합니다. 입력을 처리하는 신경망 연산 자체는 두 방식에 모두 있습니다. '추론이 전혀 없다'고 설명하지 않습니다. Qwen을 비롯한 일반 LLM도 비추론 모드나 후보 점수 계산 방식으로 실행할 수 있으므로 모든 LLM보다 빠르다는 비교가 아닙니다.\n\n두 흐름은 함께 시작하고, Nimble의 예시 결과가 먼저 나타나는 동안 위쪽 토큰 생성은 계속됩니다. 애니메이션은 8.6초 후 정지하며 실제 실행 시간이나 속도 배수를 재현하지 않습니다. 화면에는 true와 94%만 표시합니다. 이는 설명용 가상 선택지 확률입니다. 모델의 정답률이나 자해·자살 발생 확률이 아닙니다. 반환 형식은 프로그램이 구성합니다.\n\n공식 속도 관측값은 H100의 단일 질문 120개에서 중앙값 106ms, M5 Pro 64GB의 324개에서 중앙값 444ms입니다. 조건이 다른 결과이며 이 프로젝트의 측정값이 아닙니다. 입력 처리와 9B 메모리 부담은 남습니다.\n\n판단 성능 근거는 노트에만 둡니다. 초기 공개 모델의 합성 판단 문항 324개에서 Nimble 292/324=90.12%, 기반 Qwen3.5-9B 215/324=66.36%, Jev 302/324=93.21%였습니다. 사람 검토가 없는 합성 기준 라벨이며 6개 소스 계열의 좁은 평가입니다. 별도 공개 사람 라벨 평가 13개 부분집합·3,880개 기록에서도 과제별 성능이 다릅니다. 예를 들어 BoolQ 86.0%, Aegis2 81.2%, Civil Comments 70.3%로, 한국어 위기 감지 성능을 뜻하지 않습니다. 이번 소개 화면은 이러한 정확도 숫자를 전면에 제시하지 않습니다.\n\n출처: https://github.com/bespokelabsai/nimble#capabilities · https://github.com/bespokelabsai/nimble#observed-inference-latency · https://github.com/bespokelabsai/nimble/blob/main/docs/PUBLIC_BENCHMARKS.md\n\n추론형 LLM의 답변은 “죽고 싶다는 생각이 반복된다는 표현이 있어, 자살 사고와 관련된 위험 신호가 포착됩니다.”라는 설명용 문장을 순차 표시합니다. 실제 호출 결과가 아닙니다. 결과 영역의 답변 생성·생성 완료·바로 반환·판단과 확률 설명 문구는 제거하고 발표자가 구두로 설명합니다."
+      "sceneId": "nimble_intro"
     },
     {
-      "sceneId": "nimble_suicide",
-      "notes": "사용한 상담에서 상담사의 질문 4개와 참여자의 답변 4개를 원래 순서대로 연속 발췌했습니다. 앞뒤 생략은 …로 표시하며 원본 문구는 수정하지 않았습니다. 입력 상자는 멀티턴 문맥을 볼 수 있도록 넓히고 글자를 24px로 줄였습니다.\n\n원본 자살·자해 라벨 중 자살 있음인 사례이며 Nimble 9B의 공통 2회차 저장 응답도 있음으로 판단했습니다. 입력한 자료는 전체 상담이며 화면에는 연속 8턴만 인용했습니다. 발췌한 8턴만 별도로 추론한 결과가 아닙니다.\n\n원 응답 answers.suicide.probabilities.true = 0.8144451403228796. 화면은 81.4%, JSON 요약은 0.8144로 반올림했습니다. score는 있음 선택지 점수이며 임상적 발생 확률이나 정답률이 아닙니다. JSON은 원 응답을 발표에 맞게 요약한 구조입니다.\n\n출처: AI Hub 아동·청소년 상담데이터 및 2026-10-23_all_models_three_runs_095532_881938의 round_02/remote/nimble_9b 저장 결과. 원 상담·건별 응답과 사례 대조 기록은 내부 outputs/에 보존합니다. 이름·학교·연락처 같은 식별 정보와 나머지 상담 내용은 표시하지 않습니다. 새 모델 호출·라벨링·학습은 수행하지 않았습니다.\n\n두 판단 예시는 같은 디자인과 공통 함수를 사용합니다. 입력 문답·점수·JSON은 슬라이드 진입 즉시 표시하고 화살표의 이동점만 1초 동안 움직입니다."
+      "sceneId": "nimble_suicide"
     },
     {
-      "sceneId": "nimble_self_harm",
-      "notes": "사용한 상담에서 상담사의 질문 4개와 참여자의 답변 4개를 원래 순서대로 연속 발췌했습니다. 앞뒤 생략은 …로 표시하며 원본 문구는 수정하지 않았습니다. 입력 상자는 멀티턴 문맥을 볼 수 있도록 넓히고 글자를 24px로 줄였습니다.\n\n원본 자살·자해 라벨 중 자해 있음인 사례이며 Nimble 9B의 공통 2회차 저장 응답도 있음으로 판단했습니다. 입력한 자료는 전체 상담이며 화면에는 연속 8턴만 인용했습니다. 발췌한 8턴만 별도로 추론한 결과가 아닙니다.\n\n원 응답 answers.self_harm.probabilities.true = 0.9935735994878321. 화면은 99.4%, JSON 요약은 0.9936로 반올림했습니다. score는 있음 선택지 점수이며 임상적 발생 확률이나 정답률이 아닙니다. JSON은 원 응답을 발표에 맞게 요약한 구조입니다.\n\n출처: AI Hub 아동·청소년 상담데이터 및 2026-10-23_all_models_three_runs_095532_881938의 round_02/remote/nimble_9b 저장 결과. 원 상담·건별 응답과 사례 대조 기록은 내부 outputs/에 보존합니다. 이름·학교·연락처 같은 식별 정보와 나머지 상담 내용은 표시하지 않습니다. 새 모델 호출·라벨링·학습은 수행하지 않았습니다.\n\n두 판단 예시는 같은 디자인과 공통 함수를 사용합니다. 입력 문답·점수·JSON은 슬라이드 진입 즉시 표시하고 화살표의 이동점만 1초 동안 움직입니다."
+      "sceneId": "nimble_self_harm"
     },
     {
-      "sceneId": "data",
-      "notes": "데이터: AI Hub 공식 페이지의 실제 캡처입니다. 공식 전체 3,596건은 Training 2,876건, Validation 360건, Test 360건입니다. 보유 상담 원본은 3,236건이며 공식 전체 3,596건과 구분합니다. 전체 질문·답변을 고정한 모델 탐색 비교와 입력·요청·응답 보존은 수행했습니다. 학습용 발화 추출, 대화 맥락, 라벨링·분할 기준은 별도 결정 후 구현합니다. 기존 미승인 가공본과 변환기는 삭제했습니다.\n\n자료 규모는 LoRA 추가 학습 실험을 시작할 근거이며 성인 감지 성능을 보장하지 않습니다. 화면에는 공식 전체 상담 자료 3,596건만 표시합니다. 승인된 학습용 발화 수는 아직 없습니다. 숫자는 화면 진입 시 한 번만 올라가며 3.2초 뒤 완성된 화면을 유지합니다. 다시 진입하면 한 번 새로 재생합니다.\n\n출처: https://aihub.or.kr/aihubdata/data/view.do?dataSetSn=71680 · 캡처 및 수량 확인 2026-10-11\n\n발표 화면에는 페이지 번호와 이동 버튼을 표시합니다. 구체적인 설명은 이 노트로 전달합니다."
+      "sceneId": "data"
     },
     {
-      "sceneId": "finetuning",
-      "notes": "이 도식은 모델 비교 후 필요 시 학습하는 개발 순서를 설명합니다. 현재 Qwen, Nimble, Laya, GPT, Jev 등을 포함한 13종의 탐색 비교를 수행했고 구체적인 버전·설정·입력은 실행별로 고정했습니다. 11종은 3회 완료했고 GPT 두 종은 잔액 문제로 1회차만 완료했습니다. 학습용 분할과 성인 최종 평가는 별도 결정 사항입니다. 같은 평가 조건에서 종합 위기 5단계와 자살·자해 판정 성능, 놓침·오탐 및 응답 시간을 살펴봅니다. 기존 연구 자료의 모델명은 Laya입니다.\n\n비교 결과 목표 성능이 부족한 경우 LoRA 파인튜닝으로 보완합니다. 모든 비교 모델에 LoRA를 적용한다는 뜻은 아니며, 현재 추가 학습 후보는 Nimble입니다. LoRA는 적은 수의 추가 매개변수를 학습하는 방식으로, 대여한 GPU에서 실시할 계획입니다. 충분한 성능이 나오면 파인튜닝이 필수 단계는 아닙니다. 성능 충족 기준은 평가 전에 정합니다.\n\n아동·청소년 공개 자료를 바탕으로 성인 학습 예문을 증강하고 검토합니다. 도식의 주 경로는 아동·청소년 공개 자료 → 모델 성능 평가 및 비교 → 성능 부족 시 LoRA 파인튜닝입니다. 공개 자료에서 성인 데이터를 증강하는 가지를 따로 표시하고, 성인 증강 데이터는 평가 상자를 거치지 않고 LoRA 파인튜닝에 직접 연결합니다. 학습용 추출·라벨링·분할·성인 증강 기준은 사용자 결정 전이며, 이 발표 변경은 새로운 데이터 가공이나 학습 실행을 뜻하지 않습니다. 성인 최종 평가 자료는 별도로 확보·고정하고 증강이나 학습에 쓰지 않습니다. 학습 후 동일한 평가 기준으로 다시 비교합니다. 한국어 자살 위험 감지 모델이라는 문구는 가운데 평가 영역에 표시하며 별도 결과 모델 상자는 두지 않습니다.\n\n애니메이션은 자료 → 모델 비교 → 성능 부족 시 LoRA 학습의 주 경로와 성인 증강 데이터 → LoRA 학습의 보조 경로를 6.5초 동안 한 번 재생합니다. 격자는 LoRA 개념 설명이며 실제 학습 로그가 아닙니다.\n\n출처: https://aihub.or.kr/aihubdata/data/view.do?dataSetSn=71680 · LoRA 원리: https://arxiv.org/abs/2106.09685 · 행렬 애니메이션 시각 참고: https://tonyreina.github.io/lora/getting-started/what-is-lora/"
+      "sceneId": "finetuning"
     },
     {
-      "sceneId": "results_scope",
-      "notes": "아동·청소년 상담 3,236건의 원본 라벨 재현을 비교한 탐색 결과입니다. 로컬 10종과 Jev 1.13.0은 3회 평균, GPT-5.6 Luna·Terra는 완료된 1회차 결과입니다. GPT 미완료 회차는 집계하지 않았고 별표로 구분합니다. 추가 추론·학습은 수행하지 않았습니다. 성인 면담이나 타해 감지 성능을 검증한 결과가 아닙니다.\n\n로컬 모델 10종은 가로 5개·세로 2줄 카드, API 3종은 아래 설명으로 표시합니다. 같은 상담 전체 질문·답변을 입력하고 기준 라벨·평가 점수·전문가 코멘트는 입력하지 않았습니다. 로컬 환경의 화면 표기는 RTX6000 48GB이며 원 실행 기록은 RTX A6000 48GB, Ollama 0.40.7입니다. API는 해당 로컬 GPU에서 실행한 모델이 아닙니다.\n\n출처: assets/local-model-results.source.json. 원본은 outputs/model_comparison/2026-10-25_all_models_unified_review_145400_410756/metrics.json이며 원본 해시·회차별 분모와 실패 기록을 출처 파일에 보존합니다."
+      "sceneId": "results_scope"
     },
     {
-      "sceneId": "results_data",
-      "notes": "원본 3,236건에서 자살욕구 있음 351건·없음 2,853건·(해당 없음) 32건, 자해욕구 있음 127건·없음 3,100건·(해당 없음) 9건입니다. 화면에는 있음·없음만 표시합니다. (해당 없음)은 원본의 명시적 문자열이며 빈칸·누락이나 없음으로 해석하지 않습니다. 해당 없음으로 표기한 구체적 사유는 이 검증으로 확정하지 않았습니다.\n\n제외는 항목별 성능 계산에 적용합니다. 원본이나 추론 입력에서 기록 자체를 삭제하지 않았습니다. 자살 평가 대상은 3,204건, 자해는 3,227건이며 출력 실패는 모델·회차별로 추가 제외합니다. 종합 위기는 다섯 클래스가 모두 유효하여 3,236건을 대상으로 합니다. 원본 라벨은 욕구이고 모델 프롬프트는 위험을 묻는다는 정의 차이가 남아 있습니다.\n\n2026-10-26 독립 재검증: 원본 파일 해시·라벨 3,236건, 로컬 모델 10종 × 3회 저장 원 응답과 정규화 결과, 90개 모델·회차·항목의 혼동행렬·지표, 3회 평균·표준편차를 대조해 기존 결과와 모두 일치했습니다. 새 추론이나 결과 수정은 필요하지 않았습니다. 기록: outputs/model_comparison/checks/2026-10-26_reference_exclusion_audit_161903_185815/verification.json\n\n화면 제목은 원본 라벨별 건수입니다. 자살·자해 있음/없음 표와 종합 위기 분포 표를 나란히 표시합니다. 종합 위기: 정상군 665건, 관찰필요 634건, 상담필요 621건, 학대의심 644건, 응급 672건으로 합계 3,236건입니다. 해당 없음 제외·출력 실패 처리는 건수 표 아래의 작은 보조 설명으로 표시합니다."
-    },
-    {
-      "sceneId": "results_suicide",
-      "notes": "아동·청소년 상담 3,236건의 원본 라벨 재현을 비교한 탐색 결과입니다. 로컬 10종과 Jev 1.13.0은 3회 평균, GPT-5.6 Luna·Terra는 완료된 1회차 결과입니다. GPT 미완료 회차는 집계하지 않았고 별표로 구분합니다. 추가 추론·학습은 수행하지 않았습니다. 성인 면담이나 타해 감지 성능을 검증한 결과가 아닙니다.\n\n자살 평가 대상은 3,204건이며 있음 351건, 없음 2,853건입니다. 해당 없음 32건은 제외했습니다. 정밀도·재현율·F1은 있음(true) 기준입니다. 출력 실패는 해당 모델·회차의 성능 분모에서 추가 제외합니다. API의 사용 회차는 모두 입력 3,236건, 성공 3,236건, 실패 0건입니다. 원본의 욕구 라벨과 위험을 묻는 프롬프트의 의미 차이가 남아 있습니다.\n\n표는 13종을 F1 내림차순으로 배치하며 강조 행은 표시된 F1 최댓값입니다. 열 제목을 누르면 내림차순 → 오름차순 → 기본 순서로 돌아갑니다. 다른 열은 내림차순부터 시작하고 동점은 기본 순서를 유지합니다. GPT의 단일 실행과 다른 모델의 반복 평균은 동일한 반복 조건이 아닙니다. 같은 데이터 3회는 독립 평가 세트 3개가 아니며 표준편차는 원본 집계에 보존합니다.\n\n출처: assets/local-model-results.source.json. 원본은 outputs/model_comparison/2026-10-25_all_models_unified_review_145400_410756/metrics.json이며 원본 해시·회차별 분모와 실패 기록을 출처 파일에 보존합니다."
-    },
-    {
-      "sceneId": "results_self_harm",
-      "notes": "아동·청소년 상담 3,236건의 원본 라벨 재현을 비교한 탐색 결과입니다. 로컬 10종과 Jev 1.13.0은 3회 평균, GPT-5.6 Luna·Terra는 완료된 1회차 결과입니다. GPT 미완료 회차는 집계하지 않았고 별표로 구분합니다. 추가 추론·학습은 수행하지 않았습니다. 성인 면담이나 타해 감지 성능을 검증한 결과가 아닙니다.\n\n자해 평가 대상은 3,227건이며 있음 127건, 없음 3,100건입니다. 해당 없음 9건은 제외했습니다. 정밀도·재현율·F1은 있음(true) 기준입니다. 출력 실패는 해당 모델·회차의 성능 분모에서 추가 제외합니다. API의 사용 회차는 모두 입력 3,236건, 성공 3,236건, 실패 0건입니다. 원본의 욕구 라벨과 위험을 묻는 프롬프트의 의미 차이가 남아 있습니다.\n\n표는 13종을 F1 내림차순으로 배치하며 강조 행은 표시된 F1 최댓값입니다. 열 제목을 누르면 내림차순 → 오름차순 → 기본 순서로 돌아갑니다. 다른 열은 내림차순부터 시작하고 동점은 기본 순서를 유지합니다. GPT의 단일 실행과 다른 모델의 반복 평균은 동일한 반복 조건이 아닙니다. 같은 데이터 3회는 독립 평가 세트 3개가 아니며 표준편차는 원본 집계에 보존합니다.\n\n출처: assets/local-model-results.source.json. 원본은 outputs/model_comparison/2026-10-25_all_models_unified_review_145400_410756/metrics.json이며 원본 해시·회차별 분모와 실패 기록을 출처 파일에 보존합니다."
-    },
-    {
-      "sceneId": "results_confusion",
-      "notes": "자살·자해 각각 로컬 모델 3회 평균 F1이 가장 높은 모델을 선택했습니다. 자살은 Qwen3.8 27B, 자해는 Clef Flash 9B입니다. 두 모델에 공통으로 2회차를 사용했으며 해당 회차 출력 실패는 모두 0건입니다. 3회 평균 혼동행렬이나 가장 성능이 좋은 회차를 고른 그림이 아닙니다.\n\n화면은 행이 예측 있음/없음, 열이 원본 라벨링 있음/없음입니다. 기존 그림을 전치했으며 비율과 배경 강도는 원본 라벨별 분모를 그대로 유지하므로 화면에서는 열 기준 비율입니다. 빨간 테두리는 있음 사례를 없음으로 판정한 놓침입니다.\n\n자살: 탐지 327, 놓침 24, 오탐 36, 없음 정답 2,817. 자해: 탐지 103, 놓침 24, 오탐 23, 없음 정답 3,077. 자살 놓침은 351건 중 24건(6.8%), 자해 놓침은 127건 중 24건(18.9%)입니다. 원본 해당 없음은 해당 항목의 성능 계산에서 제외되어 있습니다.\n\n출처: outputs/model_comparison/2026-10-25_all_models_unified_review_145400_410756/metrics.json의 해당 모델 rounds[1].targets.confusion_matrix. 화면 값과 반올림 전 행 비율은 assets/local-model-results.source.json의 confusion_matrices에 보존합니다.\n\n화면에서는 탐지·놓침·오탐·없음 정답 문구, 있음/없음 옆 원본 총건수, 3회 평균 F1 1위·2회차·비율 안내 문구를 제거했습니다. 해당 조건은 이 노트에 보존하며 셀의 건수·비율은 유지합니다. 위쪽은 라벨링, 왼쪽은 예측으로 표시합니다."
+      "sceneId": "results_data"
     }
   ],
   "slideSequences": []
