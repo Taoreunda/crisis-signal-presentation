@@ -62,7 +62,7 @@ def result_rows(source: dict, target: str) -> str:
 def synchronize() -> dict[str, str]:
     source = json.loads((ROOT / "assets/local-model-results.source.json").read_text())
     slides = (ROOT / "slides.html").read_text()
-    for target in ("suicide", "self_harm", "stage"):
+    for target in ("suicide", "self_harm"):
         pattern = rf'<section id="results_{target}".*?</section>'
         section = re.search(pattern, slides, re.DOTALL).group()
         section = replace_one(r"<tbody>.*?</tbody>", result_rows(source, target), section)

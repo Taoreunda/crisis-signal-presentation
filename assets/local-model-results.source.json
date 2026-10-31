@@ -1,5 +1,5 @@
 {
-  "description": "발표 7~12장에 표시한 로컬·API 모델 집계값과 회차별 분모·실패·시간. 원본 추론·정답 계산을 다시 수행하지 않고 metrics.json에서 발췌. 처리 시간 슬라이드 삭제 후에도 회차별 시간·실패 기록은 출처 자료로 보존.",
+  "description": "발표 7~11장과 삭제한 종합 위기 5단계 결과 슬라이드의 로컬·API 모델 집계값과 회차별 분모·실패·시간. 원본 추론·정답 계산을 다시 수행하지 않고 metrics.json에서 발췌. 처리 시간 슬라이드 삭제 후에도 회차별 시간·실패 기록은 출처 자료로 보존.",
   "source": "outputs/model_comparison/2026-10-25_all_models_unified_review_145400_410756/metrics.json",
   "source_sha256": "27ceba38541c8fd3d39a2d576c4d89e7c492b815979f5e43e50e46bb94ddbbd2",
   "date": "2026-10-25",
